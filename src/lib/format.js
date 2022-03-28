@@ -27,7 +27,7 @@ export async function tag_user(id) {
 }
 
 export function b2e(bool) {
-    return bool ? "✅" : "❌";
+    return bool ? "yes" : "no";
 }
 
 export function parse_duration(str) {

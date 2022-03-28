@@ -53,4 +53,5 @@ export default new Command({
 
         await link_origin(id, message.url);
     },
+    permission: "kick",
 });

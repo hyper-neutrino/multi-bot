@@ -65,7 +65,7 @@ export default new Command({
         await cmd.log(
             `Muted ${expand(user)}; dm: ${b2e(
                 dm
-            )}; duration: ${unparse_duration(duration)} reason: ${reason}`
+            )}; duration: ${unparse_duration(duration)}; reason: ${reason}`
         );
 
         await link_origin(id, message.url);
