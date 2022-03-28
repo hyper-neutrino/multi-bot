@@ -1,0 +1,33 @@
+{
+    "all": [
+        "help",
+        "permission",
+        "log",
+        "warn",
+        "mute",
+        "unmute",
+        "kick",
+        "ban",
+        "unban",
+        "history",
+        "set-mute-role"
+    ],
+    "guilds": {
+        "test": {
+            "id": "927153548339343360",
+            "commands": []
+        },
+        "n": {
+            "id": "828110227035127818",
+            "commands": []
+        }
+    },
+    "owners": ["251082987360223233"],
+    "collections": [
+        "permissions",
+        "settings",
+        "history",
+        "counters",
+        "schedule"
+    ]
+}

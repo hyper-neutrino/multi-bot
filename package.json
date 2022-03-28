@@ -1,0 +1,18 @@
+{
+    "name": "multi-bot",
+    "version": "1.0.0",
+    "description": "Bot available for deployment into multiple servers.",
+    "type": "module",
+    "scripts": {
+        "create": "node src/create.js",
+        "destroy": "node src/destroy.js",
+        "start": "node src/main.js"
+    },
+    "author": "hyper-neutrino",
+    "dependencies": {
+        "discord.js": "^13.6.0",
+        "file-ez": "^1.0.0",
+        "mongodb": "^4.4.1",
+        "paimon.js": "file:../paimon"
+    }
+}
