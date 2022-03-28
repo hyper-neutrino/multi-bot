@@ -10,7 +10,8 @@
         "ban",
         "unban",
         "history",
-        "set-mute-role"
+        "set-mute-role",
+        "autoroles"
     ],
     "guilds": {
         "test": {
@@ -28,6 +29,7 @@
         "settings",
         "history",
         "counters",
-        "schedule"
+        "schedule",
+        "autoroles"
     ]
 }

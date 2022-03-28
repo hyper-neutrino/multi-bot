@@ -1,5 +1,6 @@
 import client from "../client.js";
 import db from "../db.js";
+import { add_autorole } from "../lib/autoroles.js";
 import { next_id } from "../lib/dbutils.js";
 import { unparse_duration } from "../lib/format.js";
 import { schedule } from "../lib/scheduler.js";
@@ -22,7 +23,9 @@ export default async function (mod, user, reason, dm, duration) {
     try {
         const member = await client.home.members.fetch(user.id);
         await member.roles.add(mute, `muted by ${mod.user.tag} ${mod.id}`);
-    } catch {}
+    } catch {
+        await add_autorole(user.id, mute.id);
+    }
     if (duration) await schedule("unmute", { user_id: user.id }, duration);
 
     if (dm) {

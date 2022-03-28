@@ -1,4 +1,5 @@
 import client from "../client.js";
+import { rm_autorole } from "../lib/autoroles.js";
 import { get_setting, get_setting_role } from "../lib/settings.js";
 
 export default async function (mod, user, reason, dm) {
@@ -7,7 +8,9 @@ export default async function (mod, user, reason, dm) {
     try {
         const member = await client.home.members.fetch(user.id);
         await member.roles.remove(mute, `unmuted by ${mod.user.tag} ${mod.id}`);
-    } catch {}
+    } catch {
+        await rm_autorole(user.id, mute.id);
+    }
 
     if (dm) {
         try {
