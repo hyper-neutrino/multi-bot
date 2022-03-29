@@ -13,6 +13,10 @@
         "discord.js": "^13.6.0",
         "file-ez": "^1.0.0",
         "mongodb": "^4.4.1",
+        "natural": "^5.1.13",
         "paimon.js": "file:../paimon"
+    },
+    "devDependencies": {
+        "@types/natural": "^5.1.1"
     }
 }

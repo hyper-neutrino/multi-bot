@@ -11,6 +11,8 @@ export default [
                 "s:key the log type to set",
                 ["Command Audit Logs", "command"],
                 ["Message Logs", "message"],
+                ["Mod chat (for high-priority alerts)", "mod-chat"],
+                ["Watchlist (for low-priority automod actions)", "watchlist"],
             ],
             "c:channel:text the channel to set",
         ],

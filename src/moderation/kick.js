@@ -32,6 +32,7 @@ export default async function (mod, member, reason, dm) {
                     },
                 ],
             });
+            status = 1;
         } catch {
             status = 2;
         }

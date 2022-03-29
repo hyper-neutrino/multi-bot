@@ -11,7 +11,9 @@
         "unban",
         "history",
         "set-mute-role",
-        "autoroles"
+        "autoroles",
+        "automod",
+        "User History"
     ],
     "guilds": {
         "test": {
@@ -30,6 +32,8 @@
         "history",
         "counters",
         "schedule",
-        "autoroles"
+        "autoroles",
+        "automod",
+        "automod_ignores"
     ]
 }

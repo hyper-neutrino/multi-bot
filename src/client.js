@@ -137,7 +137,7 @@ export default client;
 client.init = async function () {
     const include = new Set(config.all.concat(object.commands));
     for (const command of await load_all(res("./commands"))) {
-        if (!include.has(command.command)) continue;
+        if (!include.has(command.command ?? command.name)) continue;
         this.add_command(command);
         const key = command.extras.permission;
         if (key && key != "@everyone") {

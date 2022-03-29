@@ -1,3 +1,4 @@
+import client from "../client.js";
 import config from "../config.js";
 import db from "../db.js";
 import object from "../guild_scope.js";
@@ -31,6 +32,8 @@ export async function get_permission(key) {
 }
 
 export async function has_permission(key, member) {
+    if (!member) return false;
+    if (member.id == client.user.id) return true;
     if (key == "@everyone" || !key) return true;
     if (member.guild.ownerId == member.id) return true;
     const entry = await db.permissions.findOne({ key });
