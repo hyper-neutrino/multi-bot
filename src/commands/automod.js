@@ -1,13 +1,17 @@
 import { Command } from "paimon.js";
 import {
     actions,
+    add_automod_ignore,
     add_automod_term,
     automod_scan,
     get_automod_term,
     get_automod_terms,
+    list_automod_ignore,
+    rm_automod_ignore,
     rm_automod_term,
     set_automod_action,
 } from "../lib/automod.js";
+import { expand } from "../lib/format.js";
 import { stem } from "../lib/natural.js";
 import { pagify } from "../lib/pages.js";
 import { get_setting } from "../lib/settings.js";
@@ -219,6 +223,50 @@ export default [
             });
         },
         permission: "automod-bypass",
+    }),
+
+    new Command({
+        name: "automod ignore add",
+        description:
+            "Add a category, channel, or thread to be ignored by the automoderator.",
+        options: ["c:channel the channel to ignore"],
+        async execute(_, channel) {
+            await add_automod_ignore(channel.id);
+            return [
+                `Messages in ${channel} will be ignored by the automoderator.`,
+                `+ automod-ignore; ${expand(channel)}`,
+            ];
+        },
+        permission: "automod",
+    }),
+
+    new Command({
+        name: "automod ignore remove",
+        description:
+            "Set a category, channel, or thread to be watched by the automoderator.",
+        options: ["c:channel the channel to unignore"],
+        async execute(_, channel) {
+            await rm_automod_ignore(channel.id);
+            return [
+                `Messages in ${channel} will now be scanned by the automoderator.`,
+                `- automod-ignore; ${expand(channel)}`,
+            ];
+        },
+        permission: "automod",
+    }),
+
+    new Command({
+        name: "automod ignore list",
+        description: "Show all of the automoderator's ignored channels.",
+        options: [],
+        async execute(_) {
+            return `Automod ignores: ${
+                (await list_automod_ignore())
+                    .map((entry) => `<#${entry.channel_id}>`)
+                    .join(", ") || "(none)"
+            }`;
+        },
+        permission: "automod",
     }),
 ];
 

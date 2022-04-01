@@ -24,7 +24,7 @@ export async function get_automod_terms(options) {
 export async function add_automod_ignore(channel_id) {
     await db.automod_ignores.findOneAndUpdate(
         { channel_id },
-        {},
+        { $set: { channel_id } },
         { upsert: true }
     );
 }
@@ -33,8 +33,12 @@ export async function rm_automod_ignore(channel_id) {
     await db.automod_ignores.findOneAndDelete({ channel_id });
 }
 
+export async function list_automod_ignore() {
+    return await db.automod_ignores.find().toArray();
+}
+
 async function _ignores(channel_id) {
-    return !!(await db.automod.findOne({ channel_id }));
+    return !!(await db.automod_ignores.findOne({ channel_id }));
 }
 
 export async function is_automod_ignoring(channel) {
