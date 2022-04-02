@@ -52,10 +52,8 @@ const client = new Client({
             });
         };
 
-        interaction.confirm = async (
-            embed,
-            { yes, no, ephemeral, timeout, edit }
-        ) => {
+        interaction.confirm = async (embed, options) => {
+            let { yes, no, ephemeral, timeout, edit } = options ?? {};
             embed ||= "Please confirm that you would like to take this action.";
             if (is_string(embed)) {
                 embed = { title: "Confirm", description: embed };
@@ -152,10 +150,12 @@ client.init = async function () {
 
 client.ws.on("INTERACTION_CREATE", (interaction) => {
     if (resolvers.has(interaction.data.custom_id)) {
-        interaction.respond = (data) =>
+        interaction.respond = (data, raw) =>
             client.api
                 .interactions(interaction.id)
-                [interaction.token].callback.post({ data: { type: 4, data } });
+                [interaction.token].callback.post(
+                    raw ? data : { data: { type: 4, data } }
+                );
         resolvers.get(interaction.data.custom_id)(interaction);
     }
 });

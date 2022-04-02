@@ -9,6 +9,8 @@
         "kick",
         "ban",
         "unban",
+        "massban",
+        "massban-from-url",
         "history",
         "set-mute-role",
         "autoroles",
