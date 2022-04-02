@@ -26,14 +26,15 @@
     "guilds": {
         "test": {
             "id": "927153548339343360",
+            "owners": ["251082987360223233"],
             "commands": []
         },
         "n": {
             "id": "828110227035127818",
+            "owners": ["251082987360223233"],
             "commands": []
         }
     },
-    "owners": ["251082987360223233"],
     "collections": [
         "permissions",
         "settings",

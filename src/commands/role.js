@@ -1,5 +1,6 @@
 import { Command } from "paimon.js";
 import { expand } from "../lib/format.js";
+import { has_permission } from "../lib/permissions.js";
 
 export default [
     new Command({
@@ -7,6 +8,13 @@ export default [
         description: "Grant a role to a member.",
         options: ["m:member the member", "r:role the role"],
         async execute(cmd, member, role) {
+            if (
+                cmd.member.roles.highest.comparePositionTo(role) < 0 &&
+                !(await has_permission("role-admin", cmd.member))
+            ) {
+                return "You cannot grant that role as it is above your highest role.";
+            }
+
             try {
                 await member.roles.add(
                     role,
@@ -29,6 +37,13 @@ export default [
         description: "Remove a role from a member.",
         options: ["m:member the member", "r:role the role"],
         async execute(cmd, member, role) {
+            if (
+                cmd.member.roles.highest.comparePositionTo(role) < 0 &&
+                !(await has_permission("role-admin", cmd.member))
+            ) {
+                return "You cannot remove that role as it is above your highest role.";
+            }
+
             try {
                 await member.roles.remove(
                     role,
