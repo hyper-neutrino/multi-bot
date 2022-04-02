@@ -21,6 +21,7 @@
         "purge",
         "slowmode",
         "role",
+        "custom-role",
         "User History"
     ],
     "guilds": {
@@ -47,6 +48,7 @@
         "modmail_threads",
         "highlights",
         "logger_ignores",
-        "webhooks"
+        "webhooks",
+        "custom_roles"
     ]
 }

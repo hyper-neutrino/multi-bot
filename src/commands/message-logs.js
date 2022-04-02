@@ -18,7 +18,7 @@ export default [
                 `+ logger-ignore; ${expand(channel)}`,
             ];
         },
-        permission: "message-logs",
+        permission: "setting",
     }),
 
     new Command({
@@ -33,7 +33,7 @@ export default [
                 `- logger-ignore; ${expand(channel)}`,
             ];
         },
-        permission: "message-logs",
+        permission: "setting",
     }),
 
     new Command({
@@ -47,6 +47,6 @@ export default [
                     .join(", ") || "(none)"
             }`;
         },
-        permission: "message-logs",
+        permission: "setting",
     }),
 ];
