@@ -53,8 +53,14 @@ async function check_outgoing_modmail(message) {
         return;
     }
 
-    if (message.stickers.size > 0) {
-        await message.reply("Modmail does not currently support stickers.");
+    if (
+        message.stickers
+            .toJSON()
+            .some(
+                (sticker) => sticker.format != "PNG" && sticker.format != "APNG"
+            )
+    ) {
+        await message.reply("A sticker you sent is in an unsupported format.");
         return;
     }
 
@@ -68,7 +74,7 @@ async function check_outgoing_modmail(message) {
     await set_modmail_closed(message.channel.id, false);
 
     const content = message.content.substring(prefix.length).trim();
-    const attachments = copy_attachments(message, 0);
+    const attachments = await copy_attachments(message, 0);
 
     if (!content && attachments.length == 0) {
         await message.reply(
@@ -127,8 +133,14 @@ async function check_outgoing_modmail(message) {
 }
 
 async function check_incoming_modmail(message) {
-    if (message.stickers.size > 0) {
-        await message.reply("Modmail does not currently support stickers.");
+    if (
+        message.stickers
+            .toJSON()
+            .some(
+                (sticker) => sticker.format != "PNG" && sticker.format != "APNG"
+            )
+    ) {
+        await message.reply("A sticker you sent is in an unsupported format.");
         return;
     }
 
@@ -182,7 +194,7 @@ async function check_incoming_modmail(message) {
 
     const channel = await get_modmail_channel(message.author);
 
-    const attachments = copy_attachments(message, 1);
+    const attachments = await copy_attachments(message, 1);
 
     await channel.send({
         embeds: [

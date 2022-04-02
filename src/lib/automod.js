@@ -60,7 +60,7 @@ export const actions = [
 const reverse_actions = [...actions].reverse();
 
 export async function automod_scan(content) {
-    if (!content) return;
+    if (!content) return {};
     content = content.toLowerCase();
     const words = new Map();
     for (const word of tokenize(content)) {

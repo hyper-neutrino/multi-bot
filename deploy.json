@@ -15,6 +15,8 @@
         "automod",
         "modmail",
         "highlight",
+        "message-logs",
+        "purge",
         "User History"
     ],
     "guilds": {
@@ -38,6 +40,8 @@
         "automod",
         "automod_ignores",
         "modmail_threads",
-        "highlights"
+        "highlights",
+        "logger_ignores",
+        "webhooks"
     ]
 }

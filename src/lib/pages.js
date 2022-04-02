@@ -67,7 +67,7 @@ export async function pagify(interaction, messages, ephemeral, edit) {
                 page = messages.length - 1;
                 break;
             case "pages.stop":
-                await click.update({ components: [] });
+                await click.editReply({ components: [] });
                 collector.stop();
                 return;
         }

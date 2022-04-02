@@ -8,6 +8,7 @@ import object from "./guild_scope.js";
 import config from "./config.js";
 import { post_modal, resolvers } from "./lib/modals.js";
 import { is_string } from "./lib/utils.js";
+import StickerCache from "./lib/sticker_cache.js";
 
 const client = new Client({
     intents: 131071,
@@ -22,11 +23,13 @@ const client = new Client({
             console.log(
                 `[CMD] ${interaction.user.tag} (${interaction.user.id}): /${interaction.commandName} - ${message}`
             );
+
             if (!reply) {
                 try {
                     reply = await interaction.fetchReply();
                 } catch {}
             }
+
             return await log({
                 embeds: [
                     {
@@ -51,11 +54,7 @@ const client = new Client({
 
         interaction.confirm = async (
             embed,
-            yes,
-            no,
-            ephemeral,
-            timeout,
-            edit
+            { yes, no, ephemeral, timeout, edit }
         ) => {
             embed ||= "Please confirm that you would like to take this action.";
             if (is_string(embed)) {
@@ -133,6 +132,8 @@ const client = new Client({
 });
 
 export default client;
+
+client.stickerCache = new StickerCache(client, "cache");
 
 client.init = async function () {
     const include = new Set(config.all.concat(object.commands));

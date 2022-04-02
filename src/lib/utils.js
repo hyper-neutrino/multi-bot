@@ -43,3 +43,19 @@ export function group(items, sep, length) {
     }
     return result;
 }
+
+export async function parse_message_link(url) {
+    const match = url.match(
+        /^https:\/\/discord.com\/channels\/(\d+)\/(\d+)\/(\d+)$/
+    );
+
+    try {
+        if (!match) throw 0;
+        const guild = await client.guilds.fetch(match[1]);
+        const channel = await guild.channels.fetch(match[2]);
+        const message = await channel.messages.fetch(match[3]);
+        return message;
+    } catch {
+        return undefined;
+    }
+}

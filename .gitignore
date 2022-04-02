@@ -1,4 +1,5 @@
 config.json
+cache/*
 
 # Logs
 logs
