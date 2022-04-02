@@ -1,24 +1,30 @@
-export async function pagify(interaction, embeds, ephemeral) {
-    if (embeds.length == 0) {
+export async function pagify(interaction, messages, ephemeral, edit) {
+    if (messages.length == 0) {
         return await interaction.reply({
             content: "Attempted to return pages, but there was nothing found.",
             ephemeral,
         });
     }
 
-    if (embeds.length == 1) {
-        return await interaction.reply({ embeds, ephemeral });
+    if (messages.length == 1) {
+        return await interaction.reply({ embeds: messages, ephemeral });
     }
 
     let page = 0;
 
-    embeds.forEach(
-        (embed, index) =>
-            (embed.footer = { text: `Page ${index + 1} / ${embeds.length}` })
-    );
+    messages.forEach((message, index) => {
+        if ((message.embeds ?? []).length > 0) {
+            message.embeds[message.embeds.length - 1].footer = {
+                text: `Page ${index + 1} / ${messages.length}`,
+            };
+        }
+    });
 
-    const message = await interaction.reply({
-        embeds: [embeds[0]],
+    const message = await (edit
+        ? interaction.editReply
+        : interaction.reply
+    ).bind(interaction)({
+        ...messages[0],
         components: [
             {
                 type: "ACTION_ROW",
@@ -46,28 +52,29 @@ export async function pagify(interaction, embeds, ephemeral) {
     });
 
     collector.on("collect", async (click) => {
+        await click.deferUpdate({ ephemeral });
         switch (click.customId) {
             case "pages.first":
                 page = 0;
                 break;
             case "pages.left":
-                page = (page + embeds.length - 1) % embeds.length;
+                page = (page + messages.length - 1) % messages.length;
                 break;
             case "pages.right":
-                page = (page + 1) % embeds.length;
+                page = (page + 1) % messages.length;
                 break;
             case "pages.last":
-                page = embeds.length - 1;
+                page = messages.length - 1;
                 break;
             case "pages.stop":
                 await click.update({ components: [] });
                 collector.stop();
                 return;
         }
-        await click.update({ embeds: [embeds[page]] });
+        await click.editReply(messages[page]);
     });
 
-    collector.on("end", async (collected) => {
+    collector.on("end", async () => {
         try {
             await message.edit({ components: [] });
         } catch {}

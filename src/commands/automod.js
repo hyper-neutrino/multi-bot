@@ -166,34 +166,41 @@ export default [
 
             const color = await get_setting("embed-color");
 
-            const embeds = [];
+            const messages = [];
 
             while (strings.length > 0) {
                 const block = strings.splice(0, 8);
-                embeds.push({
-                    title: "Automod List",
-                    color,
-                    fields:
-                        block.length == 1
-                            ? [
-                                  {
-                                      name: "_ _",
-                                      value: block[0],
-                                  },
-                              ]
-                            : [0, 1]
-                                  .map((k) => ({
-                                      name: "_ _",
-                                      value: block
-                                          .filter((_, index) => index % 2 == k)
-                                          .join("\n"),
-                                      inline: true,
-                                  }))
-                                  .flat(),
+                messages.push({
+                    embeds: [
+                        {
+                            title: "Automod List",
+                            color,
+                            fields:
+                                block.length == 1
+                                    ? [
+                                          {
+                                              name: "_ _",
+                                              value: block[0],
+                                          },
+                                      ]
+                                    : [0, 1]
+                                          .map((k) => ({
+                                              name: "_ _",
+                                              value: block
+                                                  .filter(
+                                                      (_, index) =>
+                                                          index % 2 == k
+                                                  )
+                                                  .join("\n"),
+                                              inline: true,
+                                          }))
+                                          .flat(),
+                        },
+                    ],
                 });
             }
 
-            await pagify(cmd, embeds, true);
+            await pagify(cmd, messages, true);
         },
     }),
 

@@ -26,31 +26,37 @@ export default async function (cmd, user, filter, ephemeral) {
         });
     }
 
-    const embeds = [];
+    const messages = [];
 
     while (entries.length > 0) {
-        embeds.push({
-            title: `User History: ${user.tag}`,
-            color: await get_setting("embed-color"),
-            fields: await Promise.all(
-                entries.splice(0, 7).map(async (entry) => ({
-                    name: `${
-                        entry.type.charAt(0).toUpperCase() +
-                        entry.type.substring(1)
-                    } #${entry.id}`,
-                    value: `By <@${entry.mod}> (${await tag_user(
-                        entry.mod
-                    )}) on ${timestamp(entry.time)}${
-                        entry.type == "mute" || entry.type == "ban"
-                            ? ` ${unparse_duration(entry.duration ?? 0)}`
-                            : ""
-                    }${entry.url ? ` [here](${entry.url})` : ""}${
-                        entry.reason && `\n\n${entry.reason}`
-                    }`,
-                }))
-            ),
+        messages.push({
+            embeds: [
+                {
+                    title: `User History: ${user.tag}`,
+                    color: await get_setting("embed-color"),
+                    fields: await Promise.all(
+                        entries.splice(0, 7).map(async (entry) => ({
+                            name: `${
+                                entry.type.charAt(0).toUpperCase() +
+                                entry.type.substring(1)
+                            } #${entry.id}`,
+                            value: `By <@${entry.mod}> (${await tag_user(
+                                entry.mod
+                            )}) on ${timestamp(entry.time)}${
+                                entry.type == "mute" || entry.type == "ban"
+                                    ? ` ${unparse_duration(
+                                          entry.duration ?? 0
+                                      )}`
+                                    : ""
+                            }${entry.url ? ` [here](${entry.url})` : ""}${
+                                entry.reason && `\n\n${entry.reason}`
+                            }`,
+                        }))
+                    ),
+                },
+            ],
         });
     }
 
-    await pagify(cmd, embeds, ephemeral);
+    await pagify(cmd, messages, ephemeral);
 }

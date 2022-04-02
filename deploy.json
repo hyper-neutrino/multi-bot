@@ -13,6 +13,7 @@
         "set-mute-role",
         "autoroles",
         "automod",
+        "modmail",
         "User History"
     ],
     "guilds": {
@@ -34,6 +35,7 @@
         "schedule",
         "autoroles",
         "automod",
-        "automod_ignores"
+        "automod_ignores",
+        "modmail_threads"
     ]
 }

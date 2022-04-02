@@ -30,6 +30,7 @@ export default [
 ];
 
 async function scan(message) {
+    if (!client.all_commands.has("automod")) return;
     if (!message.guild) return;
     if (message.guild.id != client.home.id) return;
     if (await has_permission("automod-bypass", message.member)) return;
