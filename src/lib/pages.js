@@ -7,7 +7,7 @@ export async function pagify(interaction, messages, ephemeral, edit) {
     }
 
     if (messages.length == 1) {
-        return await interaction.reply({ embeds: messages, ephemeral });
+        return await interaction.reply({ ...messages[0], ephemeral });
     }
 
     let page = 0;

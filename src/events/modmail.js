@@ -14,18 +14,16 @@ import { has_permission } from "../lib/permissions.js";
 import { get_setting } from "../lib/settings.js";
 import { escape_regex } from "../lib/utils.js";
 
-export default [
-    new Event({
-        event: "messageCreate",
+export default new Event({
+    event: "messageCreate",
 
-        async run(message) {
-            if (message.author.id == client.user.id) return;
-            if (!(await client.all_commands.has("modmail"))) return;
-            if (message.channel.guild) await check_outgoing_modmail(message);
-            else await check_incoming_modmail(message);
-        },
-    }),
-];
+    async run(message) {
+        if (message.author.id == client.user.id) return;
+        if (!(await client.all_commands.has("modmail"))) return;
+        if (message.channel.guild) await check_outgoing_modmail(message);
+        else await check_incoming_modmail(message);
+    },
+});
 
 async function check_outgoing_modmail(message) {
     if (!(await is_modmail_channel(message.channel.id))) return;
@@ -88,9 +86,7 @@ async function check_outgoing_modmail(message) {
     if (!anon) {
         embed.author = {
             name: message.author.tag,
-            iconURL:
-                message.member.avatarURL({ dynamic: true }) ??
-                message.author.avatarURL({ dynamic: true }),
+            iconURL: message.member.displayAvatarURL({ dynamic: true }),
         };
         embed.footer = {
             iconURL: message.member.roles.highest.iconURL(),
@@ -196,7 +192,7 @@ async function check_incoming_modmail(message) {
                 color: await get_setting("embed-color"),
                 author: {
                     name: message.author.tag,
-                    iconURL: message.author.avatarURL({ dynamic: true }),
+                    iconURL: message.author.displayAvatarURL({ dynamic: true }),
                 },
             },
         ],

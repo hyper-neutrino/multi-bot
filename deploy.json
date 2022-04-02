@@ -14,6 +14,7 @@
         "autoroles",
         "automod",
         "modmail",
+        "highlight",
         "User History"
     ],
     "guilds": {
@@ -36,6 +37,7 @@
         "autoroles",
         "automod",
         "automod_ignores",
-        "modmail_threads"
+        "modmail_threads",
+        "highlights"
     ]
 }
