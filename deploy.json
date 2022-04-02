@@ -22,6 +22,7 @@
         "slowmode",
         "role",
         "custom-role",
+        "supporter-announcement",
         "User History"
     ],
     "guilds": {
@@ -49,6 +50,7 @@
         "highlights",
         "logger_ignores",
         "webhooks",
-        "custom_roles"
+        "custom_roles",
+        "supporter_announcements"
     ]
 }

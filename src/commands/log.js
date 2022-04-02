@@ -13,6 +13,10 @@ export default [
                 ["Message Logs", "message"],
                 ["Mod chat (for high-priority alerts)", "mod-chat"],
                 ["Watchlist (for low-priority automod actions)", "watchlist"],
+                [
+                    "Supporter Announcement (for boosters and other supporters)",
+                    "supporter",
+                ],
             ],
             "c:channel:text the channel to set",
         ],

@@ -8,7 +8,18 @@ export default [
         event: "guildMemberRemove",
 
         async run(member) {
-            await set_autoroles(member.id, [...member.roles.cache.keys()]);
+            await set_autoroles(
+                member.id,
+                member.roles.cache
+                    .toJSON()
+                    .filter(
+                        (role) =>
+                            !role.tags.botId &&
+                            !role.tags.integrationId &&
+                            !role.tags.premiumSubscriberRole
+                    )
+                    .map((role) => role.id)
+            );
         },
     }),
 
