@@ -19,6 +19,8 @@
         "highlight",
         "message-logs",
         "purge",
+        "slowmode",
+        "role",
         "User History"
     ],
     "guilds": {
