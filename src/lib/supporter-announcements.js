@@ -1,11 +1,11 @@
 import db from "../db.js";
 
-export async function link_supporter_role(role_id, title, body) {
+export async function link_supporter_role(role_id, data) {
     await db.supporter_announcements.findOneAndUpdate(
         {
             role_id,
         },
-        { $set: { title, body } },
+        { $set: { data } },
         { upsert: true }
     );
 }

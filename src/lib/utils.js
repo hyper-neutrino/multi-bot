@@ -1,4 +1,5 @@
 import client from "../client.js";
+import { get_setting } from "./settings.js";
 
 export async function fetch_snowflake(guild, snowflake) {
     try {
@@ -58,4 +59,34 @@ export async function parse_message_link(url) {
     } catch {
         return undefined;
     }
+}
+
+export async function recursive_edit(object, fn) {
+    if (Array.isArray(object)) {
+        return await Promise.all(
+            object.map(async (x) => await recursive_edit(x, fn))
+        );
+    } else if (is_string(object) || Object.keys(object).length == 0) {
+        return await fn(object);
+    } else {
+        const output = {};
+        for (const key of Object.keys(object)) {
+            output[key] = await recursive_edit(object[key], fn);
+        }
+        return output;
+    }
+}
+
+export async function translate(string, member, count) {
+    if (string == "{color}") return await get_setting("embed-color");
+
+    return string
+        .replaceAll("{username}", member.user.username)
+        .replaceAll("{nickname}", member.displayName)
+        .replaceAll("{tag}", member.user.tag)
+        .replaceAll("{mention}", member.toString())
+        .replaceAll("{discriminator}", member.user.discriminator)
+        .replaceAll("{count}", count.toString())
+        .replaceAll("{color}", await get_setting("embed-color"))
+        .replaceAll("{guild}", member.guild.name);
 }
