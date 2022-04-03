@@ -77,16 +77,21 @@ export async function recursive_edit(object, fn) {
     }
 }
 
-export async function translate(string, member, count) {
-    if (string == "{color}") return await get_setting("embed-color");
-
+export function user_count(guild) {
     let bots = 0,
         humans = 0;
 
-    for (const m of member.guild.members.cache.values()) {
+    for (const m of guild.members.cache.values()) {
         if (m.user.bot) ++bots;
         else ++humans;
     }
+    return { bots, humans };
+}
+
+export async function translate(string, member, count) {
+    if (string == "{color}") return await get_setting("embed-color");
+
+    const { bots, humans } = user_count(member.guild);
 
     return dict_format(string, {
         username: member.user.username,
@@ -100,6 +105,7 @@ export async function translate(string, member, count) {
         members: member.guild.memberCount,
         bots: bots.toString(),
         humans: humans.toString(),
+        boosters: member.guild.premiumSubscriptionCount,
     });
 }
 

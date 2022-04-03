@@ -36,6 +36,7 @@
         "welcome",
         "suggest",
         "suggestion",
+        "stats-channel",
         "User History"
     ],
     "guilds": {
@@ -69,6 +70,7 @@
         "polls",
         "poll_votes",
         "stickies",
-        "suggestions"
+        "suggestions",
+        "stats_channels"
     ]
 }
