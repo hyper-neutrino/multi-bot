@@ -107,6 +107,8 @@ export default [
 
             await message.edit({ embeds: [embed] });
 
+            let success = true;
+
             if (dm) {
                 try {
                     const user = await client.users.fetch(suggestion.user_id);
@@ -134,11 +136,17 @@ export default [
                     await cmd.editReply(
                         "Updated the suggestion, but I could not DM the user."
                     );
-                    return;
+                    success = false;
                 }
             }
 
-            await cmd.editReply("Updated the suggestion.");
+            if (success) await cmd.editReply("Updated the suggestion.");
+
+            await cmd.log(
+                `* update suggestion #${id} - ${status.toLowerCase()} - ${
+                    dm ? (success ? "with DM" : "DM failed") : "without DM"
+                }`
+            );
         },
         permission: "suggestion",
     }),
