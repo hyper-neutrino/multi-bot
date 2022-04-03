@@ -48,10 +48,10 @@ export default new Event({
 
 function translate(string, member, count) {
     return string
-        .replace("{name}", member.user.username)
-        .replace("{nick}", member.displayName)
-        .replace("{tag}", member.user.tag)
-        .replace("{mention}", member.toString())
-        .replace("{discriminator}", member.user.discriminator)
-        .replace("{count}", count.toString());
+        .replaceAll("{name}", member.user.username)
+        .replaceAll("{nick}", member.displayName)
+        .replaceAll("{tag}", member.user.tag)
+        .replaceAll("{mention}", member.toString())
+        .replaceAll("{discriminator}", member.user.discriminator)
+        .replaceAll("{count}", count.toString());
 }
