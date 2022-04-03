@@ -30,6 +30,7 @@
         "say",
         "send",
         "reaction-role",
+        "reminder",
         "User History"
     ],
     "guilds": {

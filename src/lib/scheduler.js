@@ -9,6 +9,14 @@ export async function schedule(key, data, duration) {
     await db.schedule.insertOne({ key, ...data, time });
 }
 
+export async function get_scheduled_task(key, data) {
+    return await db.schedule.findOne({ key, ...data });
+}
+
+export async function get_scheduled_tasks(key, data) {
+    return await db.schedule.find({ key, ...data }).toArray();
+}
+
 export async function unschedule(key, data) {
     await db.schedule.deleteMany({ key, ...data });
 }
@@ -25,6 +33,24 @@ async function run(key, data) {
     } else if (key == "unban") {
         try {
             await client.home.bans.remove(data.user_id, "ban expired");
+        } catch {}
+    } else if (key == "remind") {
+        try {
+            const user = await client.users.fetch(data.user_id);
+
+            await user.send({
+                embeds: [
+                    {
+                        title: `Reminder #${data.id}`,
+                        description: `You asked me [here](${
+                            data.origin
+                        }) to remind you${data.query && `: ${data.query}`}`,
+                        color: await get_setting("embed-color"),
+                    },
+                ],
+            });
+
+            await unschedule("remind", { id: data.id });
         } catch {}
     }
 }
