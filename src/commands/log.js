@@ -10,6 +10,7 @@ const choices = [
     ["Watchlist (for low-priority automod actions)", "watchlist"],
     ["Supporter Announcement (for boosters and other supporters)", "supporter"],
     ["Welcome Channel (for new members)", "welcome"],
+    ["Suggestions (/suggest)", "suggestions"],
 ];
 
 export default [
