@@ -23,7 +23,9 @@ export async function destroy_custom_role(member) {
     const role = await get_custom_role(member, false);
 
     if (role) {
-        await role.delete();
+        try {
+            await role.delete();
+        } catch {}
     }
 
     await db.custom_roles.findOneAndDelete({ user_id: member.id });

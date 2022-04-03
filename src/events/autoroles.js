@@ -14,9 +14,10 @@ export default [
                     .toJSON()
                     .filter(
                         (role) =>
-                            !role.tags.botId &&
-                            !role.tags.integrationId &&
-                            !role.tags.premiumSubscriberRole
+                            !role.tags ||
+                            (!role.tags.botId &&
+                                !role.tags.integrationId &&
+                                !role.tags.premiumSubscriberRole)
                     )
                     .map((role) => role.id)
             );

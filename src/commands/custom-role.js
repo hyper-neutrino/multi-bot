@@ -3,7 +3,7 @@ import {
     destroy_custom_role,
     get_custom_role,
     has_custom_role,
-} from "../lib/custom-role.js";
+} from "../lib/custom-roles.js";
 import { expand } from "../lib/format.js";
 import { set_setting } from "../lib/settings.js";
 

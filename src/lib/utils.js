@@ -80,13 +80,33 @@ export async function recursive_edit(object, fn) {
 export async function translate(string, member, count) {
     if (string == "{color}") return await get_setting("embed-color");
 
-    return string
-        .replaceAll("{username}", member.user.username)
-        .replaceAll("{nickname}", member.displayName)
-        .replaceAll("{tag}", member.user.tag)
-        .replaceAll("{mention}", member.toString())
-        .replaceAll("{discriminator}", member.user.discriminator)
-        .replaceAll("{count}", count.toString())
-        .replaceAll("{color}", await get_setting("embed-color"))
-        .replaceAll("{guild}", member.guild.name);
+    let bots = 0,
+        humans = 0;
+
+    for (const m of member.guild.members.cache.values()) {
+        if (m.user.bot) ++bots;
+        else ++humans;
+    }
+
+    return dict_format(string, {
+        username: member.user.username,
+        nickname: member.displayName,
+        tag: member.user.tag,
+        mention: member.toString(),
+        discriminator: member.user.discriminator,
+        count: count.toString(),
+        color: await get_setting("embed-color"),
+        guild: member.guild.name,
+        members: member.guild.memberCount,
+        bots: bots.toString(),
+        humans: humans.toString(),
+    });
+}
+
+export function dict_format(string, map) {
+    for (const key of Object.keys(map)) {
+        string = string.replaceAll(`{${key}}`, map[key]);
+    }
+
+    return string;
 }

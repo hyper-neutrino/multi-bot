@@ -42,7 +42,7 @@ export async function has_permission(key, member) {
     if (!entry.snowflakes) return false;
     const snowflakes = new Set(entry.snowflakes);
     if (snowflakes.has(member.id)) return true;
-    for (const id of member.roles.cache) {
+    for (const id of member.roles.cache.keys()) {
         if (snowflakes.has(id)) return true;
     }
     return false;
