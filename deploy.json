@@ -27,6 +27,8 @@
         "supporter-announcement",
         "nukeguard",
         "poll",
+        "say",
+        "send",
         "User History"
     ],
     "guilds": {

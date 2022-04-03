@@ -11,6 +11,7 @@ export default new Event({
     event: "interactionCreate",
 
     async run(interaction) {
+        if (!interaction.isButton() && !interaction.isSelectMenu()) return;
         if (!interaction.customId.startsWith("poll.")) return;
 
         const cmd = interaction.customId.substring(5);
