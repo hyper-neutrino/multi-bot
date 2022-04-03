@@ -29,6 +29,7 @@
         "poll",
         "say",
         "send",
+        "reaction-role",
         "User History"
     ],
     "guilds": {
