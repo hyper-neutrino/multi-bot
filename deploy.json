@@ -26,6 +26,7 @@
         "co-op-settings",
         "supporter-announcement",
         "nukeguard",
+        "poll",
         "User History"
     ],
     "guilds": {
@@ -55,6 +56,8 @@
         "webhooks",
         "custom_roles",
         "supporter_announcements",
-        "protected_channels"
+        "protected_channels",
+        "polls",
+        "poll_votes"
     ]
 }
