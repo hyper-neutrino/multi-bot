@@ -23,6 +23,7 @@
         "role",
         "custom-role",
         "supporter-announcement",
+        "nukeguard",
         "User History"
     ],
     "guilds": {
@@ -51,6 +52,7 @@
         "logger_ignores",
         "webhooks",
         "custom_roles",
-        "supporter_announcements"
+        "supporter_announcements",
+        "protected_channels"
     ]
 }
