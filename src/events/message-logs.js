@@ -22,6 +22,7 @@ export default [
 
         async run(before, after) {
             if (!(await is_loggable(after))) return;
+            if (before.content == after.content) return;
 
             const hook = await get_hook();
             if (!hook) return;
