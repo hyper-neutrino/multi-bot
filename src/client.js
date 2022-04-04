@@ -124,6 +124,16 @@ const client = new Client({
         }
     },
     async error(interaction, error) {
+        if (is_string(error)) {
+            try {
+                await interaction.reply({
+                    content: error,
+                    ephemeral: true,
+                });
+                return;
+            } catch {}
+        }
+
         console.error(`Error in command /${interaction.commandName}`);
         console.error(error.stack || error);
     },

@@ -136,14 +136,14 @@ export default [
             while (messages.length > 0) {
                 const block = [];
                 if ((messages[0].attachments ?? []).length > 0) {
-                    block.push(messages.splice(0, 1)[0]);
+                    block.push(messages.shift());
                 } else {
                     while (
                         messages.length > 0 &&
                         block.length < 5 &&
                         (messages[0].attachments ?? []).length == 0
                     ) {
-                        block.push(messages.splice(0, 1)[0]);
+                        block.push(messages.shift());
                     }
                 }
                 output.push({
