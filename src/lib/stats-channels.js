@@ -30,7 +30,7 @@ setInterval(async () => {
                 members: channel.guild.memberCount,
                 bots: bots.toString(),
                 humans: humans.toString(),
-                boosters: channel.guild.premiumSubscriptionCount,
+                boosts: channel.guild.premiumSubscriptionCount,
             });
 
             if (name == channel.name) continue;
