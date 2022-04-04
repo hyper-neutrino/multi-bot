@@ -68,7 +68,9 @@ export default [
                 try {
                     await play(cmd, item.shortUrl, false, true);
                     ++success;
-                } catch {}
+                } catch (error) {
+                    console.error(error);
+                }
             }
 
             await message.edit({
