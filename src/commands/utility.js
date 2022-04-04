@@ -550,6 +550,50 @@ export default [
             }
         },
     }),
+
+    new Command({
+        name: "avatar",
+        description: "Get the user's avatar(s).",
+        options: ["u:user the user to check"],
+        async execute(cmd, user) {
+            let member;
+            try {
+                member = await cmd.guild.members.fetch(user.id);
+            } catch {}
+
+            const urls = [];
+
+            if (member) {
+                const url = member.avatarURL({ dynamic: true, size: 4096 });
+                if (url) urls.push(url);
+            }
+
+            urls.push(user.displayAvatarURL({ dynamic: true, size: 4096 }));
+
+            await cmd.reply({
+                embeds: urls.map((url, index) => ({
+                    title: `${
+                        urls.length > 1 && index == 0 ? "Guild-Specific " : ""
+                    }Avatar Link`,
+                    color:
+                        urls.length > 1 && index == 0
+                            ? member.displayColor
+                            : user.accentColor,
+                    url,
+                    image: { url },
+                    author: {
+                        name:
+                            urls.length > 1 && index == 0
+                                ? member.displayName
+                                : user.tag,
+                        url,
+                        iconURL: url,
+                    },
+                })),
+            });
+        },
+        permission: "history",
+    }),
 ];
 
 function channel_breakdown(channels) {
