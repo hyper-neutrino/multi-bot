@@ -21,7 +21,7 @@
         "natural": "^5.1.13",
         "node-fetch": "^3.2.3",
         "opusscript": "^0.0.8",
-        "paimon.js": "file:../paimon",
+        "paimon.js": "^1.0.3",
         "xregexp": "^5.1.0",
         "yt-search": "^2.10.3",
         "ytdl-core": "^4.11.0",
