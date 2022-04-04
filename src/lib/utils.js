@@ -108,7 +108,7 @@ export async function translate(string, member, count) {
         members: member.guild.memberCount,
         bots: bots.toString(),
         humans: humans.toString(),
-        boosters: member.guild.premiumSubscriptionCount,
+        boosts: member.guild.premiumSubscriptionCount,
     });
 }
 
