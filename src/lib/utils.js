@@ -89,6 +89,8 @@ export function user_count(guild) {
 }
 
 export async function translate(string, member, count) {
+    if (!is_string(string)) return string;
+
     if (string == "{color}") return await get_setting("embed-color");
 
     const { bots, humans } = user_count(member.guild);
@@ -110,6 +112,8 @@ export async function translate(string, member, count) {
 }
 
 export function dict_format(string, map) {
+    if (!is_string(string)) return string;
+
     for (const key of Object.keys(map)) {
         string = string.replaceAll(`{${key}}`, map[key]);
     }

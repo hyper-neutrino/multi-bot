@@ -133,7 +133,9 @@ async function scan(message) {
 
     if (result == "defer") return;
 
-    await message.delete();
+    try {
+        await message.delete();
+    } catch {}
 
     if (result == "delete") return;
 

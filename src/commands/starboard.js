@@ -77,7 +77,7 @@ export default [
             await set_setting(`starboard.${channel.id}`, undefined);
 
             return [
-                `Reverted the starboard for ${channel} to th default starboard.`,
+                `Reverted the starboard for ${channel} to the default starboard.`,
                 `- starboard: ${expand(channel)} → default`,
             ];
         },

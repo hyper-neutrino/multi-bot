@@ -38,6 +38,7 @@
         "suggestion",
         "stats-channel",
         "starboard",
+        "trigger",
         "User History"
     ],
     "guilds": {
@@ -73,6 +74,7 @@
         "stickies",
         "suggestions",
         "stats_channels",
-        "starboard"
+        "starboard",
+        "triggers"
     ]
 }
