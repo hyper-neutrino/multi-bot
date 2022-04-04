@@ -30,9 +30,8 @@ export default async function (mod, id_list, reason, days, origin) {
                 mod: mod.id,
                 reason: "[massban] " + reason,
                 duration: 0,
+                url: origin,
             });
-
-            await link_origin(id, origin);
         } catch {}
     }
 
