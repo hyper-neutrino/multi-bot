@@ -101,6 +101,7 @@ export async function translate(string, member, count) {
         tag: member.user.tag,
         mention: member.toString(),
         discriminator: member.user.discriminator,
+        avatar: member.displayAvatarURL({ dynamic: true }),
         count: count.toString(),
         color: await get_setting("embed-color"),
         guild: member.guild.name,
