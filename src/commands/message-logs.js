@@ -1,4 +1,5 @@
 import { Command } from "paimon.js";
+import { expand } from "../lib/format.js";
 import {
     add_logger_ignore,
     list_logger_ignore,
@@ -13,6 +14,7 @@ export default [
         options: ["c:channel the channel to ignore"],
         async execute(_, channel) {
             await add_logger_ignore(channel.id);
+
             return [
                 `Messages in ${channel} will be ignored by the message logger.`,
                 `+ logger-ignore; ${expand(channel)}`,
@@ -28,6 +30,7 @@ export default [
         options: ["c:channel the channel to unignore"],
         async execute(_, channel) {
             await rm_logger_ignore(channel.id);
+
             return [
                 `Edits and deletions in ${channel} will now be scanned by the message logger.`,
                 `- logger-ignore; ${expand(channel)}`,
