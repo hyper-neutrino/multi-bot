@@ -41,7 +41,9 @@
         "trigger",
         "count",
         "music",
-        "User History"
+        "User History",
+        "Flag Message",
+        "Report User"
     ],
     "guilds": {
         "test": {

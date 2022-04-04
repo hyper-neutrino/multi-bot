@@ -882,18 +882,7 @@ async function check_queue(cmd, force) {
             server.index = 0;
             if (server.loop > 0) --server.loop;
         } else {
-            await end(ctx, server);
-            await ctx.send({
-                embeds: [
-                    {
-                        title: "Queue Ended",
-                        description:
-                            "There are no more songs left in the queue. `/music play` your favorite songs to keep the music going.",
-                        color: "AQUA",
-                    },
-                ],
-            });
-
+            await end(cmd, server);
             return;
         }
     }
