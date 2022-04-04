@@ -1,6 +1,5 @@
 {
     "all": [
-        "help",
         "permission",
         "log",
         "warn",
