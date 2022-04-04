@@ -13,6 +13,13 @@ export default new Event({
         if (message.webhookId) return;
 
         for (const trigger of await get_triggers()) {
+            if (
+                trigger.channel_id &&
+                message.channel.id != trigger.channel_id
+            ) {
+                continue;
+            }
+
             if (trigger.regex) {
                 if (
                     !message.content.match(

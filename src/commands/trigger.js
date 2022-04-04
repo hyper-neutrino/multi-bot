@@ -28,16 +28,18 @@ export default [
                 ["Reply without ping", "reply"],
                 ["Reply with ping", "ping"],
             ],
+            "b:local* set to true to only work in this channel",
         ],
         async execute(
-            _,
+            cmd,
             match,
             type,
             response,
             wildcard,
             case_sensitive,
             regex,
-            response_type
+            response_type,
+            local
         ) {
             if (await get_trigger(match)) {
                 return "This match string is already in use.";
@@ -64,6 +66,7 @@ export default [
                 case_sensitive,
                 regex,
                 response_type,
+                ...(local ? { channel_id: cmd.channel.id } : {}),
             });
 
             return [
