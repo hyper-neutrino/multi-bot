@@ -79,6 +79,7 @@ export default new Command({
                                 type: "SELECT_MENU",
                                 customId: "multi-role",
                                 options,
+                                minValues: 0,
                                 maxValues: max || options.length,
                             },
                         ],

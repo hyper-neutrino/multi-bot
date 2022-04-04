@@ -43,11 +43,14 @@ export default new Event({
             );
 
             await interaction.reply({
-                content: `I have given ${[...add]
-                    .map((id) => `<@&${id}>`)
-                    .join(
-                        ", "
-                    )} to you (and removed other roles that were not selected).`,
+                content:
+                    add.size > 0
+                        ? `I have given ${[...add]
+                              .map((id) => `<@&${id}>`)
+                              .join(
+                                  ", "
+                              )} to you (and removed other roles that were not selected).`
+                        : "I have removed the available roles from you.",
                 ephemeral: true,
             });
         }
