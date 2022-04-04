@@ -37,6 +37,17 @@ export async function has_permission(key, member) {
     if (object.owners.indexOf(member.id) != -1) return true;
     if (key == "@everyone" || !key) return true;
     if (member.guild.ownerId == member.id) return true;
+
+    if (permission_bindings[key]) {
+        if (
+            [permission_bindings[key]]
+                .flat()
+                .some((item) => member.permissions.has(item))
+        ) {
+            return true;
+        }
+    }
+
     const entry = await db.permissions.findOne({ key });
     if (!entry) return false;
     if (!entry.snowflakes) return false;
@@ -57,3 +68,49 @@ export function create_permission(key) {
 export async function autocomplete(_, query) {
     return [...permission_list].sort().filter((item) => item.match(query));
 }
+
+const permission_bindings = {
+    automod: [],
+    "automod-bypass": ["MANAGE_MESSAGES"],
+    autoroles: [],
+    ban: ["BAN_MEMBERS"],
+    "custom-role": [],
+    highlight: [
+        "MANAGE_MESSAGES",
+        "MODERATE_MEMBERS",
+        "KICK_MEMBERS",
+        "BAN_MEMBERS",
+    ],
+    history: [
+        "MANAGE_MESSAGES",
+        "MODERATE_MEMBERS",
+        "KICK_MEMBERS",
+        "BAN_MEMBERS",
+    ],
+    "history-admin": ["MANAGE_GUILD"],
+    kick: ["KICK_MEMBERS"],
+    massban: ["MANAGE_GUILD"],
+    modmail: [],
+    mute: ["MODERATE_MEMBERS"],
+    nukeguard: [],
+    permission: [],
+    poll: [],
+    purge: ["MANAGE_MESSAGES"],
+    "purge-more": ["MANAGE_GUILD"],
+    "reaction-role": ["MANAGE_GUILD"],
+    role: ["MANAGE_ROLES"],
+    "role-admin": [],
+    immunity: [
+        "MANAGE_MESSAGES",
+        "MODERATE_MEMBERS",
+        "KICK_MEMBERS",
+        "BAN_MEMBERS",
+    ],
+    send: [],
+    setting: [],
+    slowmode: ["MANAGE_MESSAGES", "MANAGE_CHANNELS"],
+    sticky: ["MANAGE_MESSAGES"],
+    suggestion: ["MANAGE_GUILD"],
+    webhook: ["MANAGE_WEBHOOKS"],
+    warn: ["MANAGE_MESSAGES", "MODERATE_MEMBERS"],
+};
