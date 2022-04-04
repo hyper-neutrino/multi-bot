@@ -710,7 +710,7 @@ async function play(cmd, query, prompt, nosend) {
     const results = await get_songs(query);
 
     if (results.length == 1 || !prompt) {
-        await cmd.deferReply();
+        if (!nosend) await cmd.deferReply();
         await queue(cmd, (x) => cmd.editReply(x), results[0], nosend);
     } else {
         const message = await cmd.reply({
