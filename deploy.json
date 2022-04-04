@@ -44,6 +44,7 @@
         "clone",
         "webhook",
         "point",
+        "info",
         "User History",
         "Flag Message",
         "Report User"
