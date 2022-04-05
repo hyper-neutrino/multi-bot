@@ -52,14 +52,18 @@ export default [
                             : []
                         ).concat({
                             name: "Source",
-                            value: `Sent by ${message.author} in ${message.channel}: [Jump!](${message.url})`,
+                            value: `Sent by ${
+                                message.webhookId ? "a webhook" : message.author
+                            } in ${message.channel}: [Jump!](${message.url})`,
                         }),
-                        author: {
-                            name: message.author.tag,
-                            iconURL: message.member.displayAvatarURL({
-                                dynamic: true,
-                            }),
-                        },
+                        author: message.webhookId
+                            ? null
+                            : {
+                                  name: message.author.tag,
+                                  iconURL: message.member.displayAvatarURL({
+                                      dynamic: true,
+                                  }),
+                              },
                         footer: {
                             text: `Flagged by ${cmd.user.tag} (${cmd.user.id})`,
                             iconURL: cmd.member.displayAvatarURL({
