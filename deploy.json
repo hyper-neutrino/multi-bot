@@ -46,6 +46,7 @@
         "point",
         "info",
         "avatar",
+        "Edit",
         "User History",
         "Flag Message",
         "Report User"
@@ -53,6 +54,11 @@
     "guilds": {
         "shm": {
             "id": "805458032908959804",
+            "owners": ["251082987360223233"],
+            "commands": []
+        },
+        "test": {
+            "id": "927153548339343360",
             "owners": ["251082987360223233"],
             "commands": []
         }
