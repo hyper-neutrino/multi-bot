@@ -12,6 +12,10 @@ export default new MessageCommand({
             if (message.webhookId) {
                 const webhooks = await cmd.guild.fetchWebhooks();
                 webhook = webhooks.get(message.webhookId);
+
+                if (!webhook) {
+                    return "I could not gain control of the webhook that sent that message.";
+                }
             } else {
                 return "That message does not belong to me and is not a webhook message, so I cannot edit it.";
             }
