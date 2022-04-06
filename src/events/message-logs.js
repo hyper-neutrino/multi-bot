@@ -107,7 +107,7 @@ export default [
 ];
 
 async function log_delete(message) {
-    if (!(await is_loggable(message))) return;
+    if (!(await is_loggable(message, false, true))) return;
 
     const hook = await get_hook();
     if (!hook) return;
