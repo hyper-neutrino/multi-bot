@@ -49,7 +49,9 @@
         "Edit",
         "User History",
         "Flag Message",
-        "Report User"
+        "Report User",
+        "Purge Start",
+        "Purge End"
     ],
     "guilds": {
         "shm": {

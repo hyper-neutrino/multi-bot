@@ -1,4 +1,4 @@
-import { Command } from "paimon.js";
+import { Command, is_string, MessageCommand } from "paimon.js";
 import { log_delete_bulk, purge_log_skip } from "../events/message-logs.js";
 import { expand } from "../lib/format.js";
 import { is_loggable, is_logger_ignoring } from "../lib/message-logs.js";
@@ -33,52 +33,117 @@ export default [
             first = await parse_message_link(first);
             last = await parse_message_link(last);
 
-            if (!first || !last) {
-                return `Could not find the ${
-                    first ? "last" : last ? "first" : "first or last"
-                } message; please make sure it is a valid message link and that I can see the message.`;
-            }
+            return await purge_between(cmd, first, last);
+        },
+        permission: "purge-more",
+    }),
 
-            if (first.createdAt > last.createdAt) {
-                return "Your target messages are in the wrong order.";
-            }
+    new MessageCommand({
+        name: "Purge Start",
+        async execute(cmd, message) {
+            let fail;
 
-            if (first.id == last.id) {
-                return "Cannot purge 1 message.";
-            }
-
-            if (first.channel.id != last.channel.id) {
-                return "Your target messages must be in the same channel.";
-            }
-
-            await cmd.deferReply({ ephemeral: true });
-
-            let head = first;
-            let keep_going = true;
-            const messages = [first];
-
-            while (keep_going) {
-                const block = await first.channel.messages.fetch({
-                    after: head.id,
-                    limit: 100,
-                });
-
-                for (const message of block.values()) {
-                    if (message.createdAt >= last.createdAt) keep_going = false;
-                    if (message.createdAt > head.createdAt) head = message;
-                    if (message.createdAt <= last.createdAt) {
-                        messages.push(message);
+            if (end_markers.has(cmd.user.id)) {
+                const marker = end_markers.get(cmd.user.id);
+                if (new Date() - marker.time < 60000) {
+                    fail = await purge_between(cmd, message, marker.item);
+                    if (!fail) {
+                        start_markers.delete(cmd.user.id);
+                        end_markers.delete(cmd.user.id);
+                        return;
                     }
                 }
             }
 
-            messages.sort((a, b) => b.createdAt - a.createdAt);
+            start_markers.set(cmd.user.id, { time: new Date(), item: message });
 
-            await purge(cmd, first.channel, messages);
+            return `${fail ? `Purge failed: ${fail} ` : ""}Marked <${
+                message.url
+            }> as the first message to purge.`;
         },
         permission: "purge-more",
     }),
+
+    new MessageCommand({
+        name: "Purge End",
+        async execute(cmd, message) {
+            let fail;
+
+            if (start_markers.has(cmd.user.id)) {
+                const marker = start_markers.get(cmd.user.id);
+                if (new Date() - marker.time < 60000) {
+                    fail = await purge_between(cmd, marker.item, message);
+                    if (!fail) {
+                        start_markers.delete(cmd.user.id);
+                        end_markers.delete(cmd.user.id);
+                        return;
+                    }
+                }
+            }
+
+            end_markers.set(cmd.user.id, { time: new Date(), item: message });
+
+            return `${fail ? `Purge failed: ${fail} ` : ""}Marked <${
+                message.url
+            }> as the last message to purge.`;
+        },
+    }),
 ];
+
+const start_markers = new Map();
+const end_markers = new Map();
+
+async function messages_between(cmd, first, last) {
+    if (!first || !last) {
+        return `Could not find the ${
+            first ? "last" : last ? "first" : "first or last"
+        } message; please make sure it is a valid message link and that I can see the message.`;
+    }
+
+    if (first.createdAt > last.createdAt) {
+        return "Your target messages are in the wrong order.";
+    }
+
+    if (first.id == last.id) {
+        return "Cannot purge 1 message.";
+    }
+
+    if (first.channel.id != last.channel.id) {
+        return "Your target messages must be in the same channel.";
+    }
+
+    await cmd.deferReply({ ephemeral: true });
+
+    let head = first;
+    let keep_going = true;
+    const messages = [first];
+
+    while (keep_going) {
+        const block = await first.channel.messages.fetch({
+            after: head.id,
+            limit: 100,
+        });
+
+        for (const message of block.values()) {
+            if (message.createdAt >= last.createdAt) keep_going = false;
+            if (message.createdAt > head.createdAt) head = message;
+            if (message.createdAt <= last.createdAt) {
+                messages.push(message);
+            }
+        }
+    }
+
+    messages.sort((a, b) => b.createdAt - a.createdAt);
+
+    return messages;
+}
+
+async function purge_between(cmd, first, last) {
+    const messages = await messages_between(cmd, first, last);
+    if (is_string(messages)) return messages;
+
+    await purge(cmd, first.channel, messages);
+}
 
 async function purge(cmd, channel, messages) {
     const response = await cmd.confirm(

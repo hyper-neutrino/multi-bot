@@ -81,7 +81,10 @@ export default new MessageCommand({
             return;
         }
 
-        await modal.respond({ content: "Edited.", flags: 64 });
+        await modal.respond({
+            content: `Edited <${message.url}>.`,
+            flags: 64,
+        });
     },
     permission: "send",
 });
