@@ -30,7 +30,7 @@ export default new Event({
         apply_ping(message.channel, message.author);
 
         const members = [];
-        const normalized = stem(message.content).join(" ");
+        const normalized = " " + stem(message.content).join(" ") + " ";
 
         for (const user_id of await get_highlighting_users()) {
             if (message.author.id == user_id) continue;
@@ -49,7 +49,7 @@ export default new Event({
             }
 
             for (const { term } of await get_highlights(user_id)) {
-                if (normalized.indexOf(term) != -1) {
+                if (normalized.indexOf(" " + term + " ") != -1) {
                     members.push(member);
                     break;
                 }
