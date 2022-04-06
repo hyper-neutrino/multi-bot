@@ -106,10 +106,10 @@ export default [
     }),
 ];
 
-async function log_delete(message) {
+async function log_delete(message, hook) {
     if (!(await is_loggable(message, false, true))) return;
 
-    const hook = await get_hook();
+    if (!hook) hook = await get_hook();
     if (!hook) return;
 
     const files = await copy_attachments(message, 1);
@@ -151,7 +151,9 @@ async function log_delete(message) {
 }
 
 export async function log_delete_bulk(messages) {
-    for (const message of messages) await log_delete(message);
+    const hook = await get_hook();
+    for (const message of messages) await log_delete(message, hook);
+
     if (messages.length <= 1) return;
 
     const rows = [];
