@@ -151,8 +151,8 @@ async function log_delete(message) {
 }
 
 export async function log_delete_bulk(messages) {
-    if (messages.length == 0) return;
-    if (messages.length == 1) return await log_delete(messages[0]);
+    for (const message of messages) await log_delete(message);
+    if (messages.length <= 1) return;
 
     const rows = [];
     for (const message of messages) {
