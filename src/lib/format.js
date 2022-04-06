@@ -5,10 +5,10 @@ export function expand(item) {
         return `${item} (${item.tag} \`${item.id}\`)`;
     } else if (item.user) {
         return `${item} (${item.user.tag} \`${item.id}\`)`;
-    } else if (item.members) {
-        return `${item} (@${item.name} \`${item.id}\`)`;
     } else if (item.messages) {
         return `${item} (#${item.name} \`${item.id}\`)`;
+    } else if (item.members) {
+        return `${item} (@${item.name} \`${item.id}\`)`;
     } else {
         return item.toString();
     }
