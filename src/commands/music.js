@@ -107,7 +107,14 @@ export default [
 
             try {
                 server.player.pause(true);
-                return "Paused.";
+                await cmd.reply({
+                    embeds: [
+                        {
+                            title: "Paused.",
+                            color: "GREEN",
+                        },
+                    ],
+                });
             } catch {
                 return "Unexpected error trying to pause.";
             }
@@ -127,7 +134,14 @@ export default [
 
             try {
                 server.player.unpause();
-                return "Resumed.";
+                await cmd.reply({
+                    embeds: [
+                        {
+                            title: "Resumed.",
+                            color: "GREEN",
+                        },
+                    ],
+                });
             } catch {
                 return "Unexpected error trying to unpause.";
             }
@@ -310,7 +324,14 @@ export default [
             server.repeat = server.loop = server.radio = false;
             check_queue(cmd);
 
-            return "Stopped.";
+            await cmd.reply({
+                embeds: [
+                    {
+                        title: "Stopped.",
+                        color: "RED",
+                    },
+                ],
+            });
         },
     }),
 
@@ -327,7 +348,14 @@ export default [
                 server.connection.destroy();
             } finally {
                 delete servers[cmd.guild.id];
-                return "Stopped.";
+                await cmd.reply({
+                    embeds: [
+                        {
+                            title: "Disconnected.",
+                            color: "PURPLE",
+                        },
+                    ],
+                });
             }
         },
     }),
