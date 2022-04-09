@@ -2,6 +2,8 @@ import client from "../client.js";
 import db from "../db.js";
 import { get_setting, get_setting_channel } from "./settings.js";
 
+await db.init("starboard");
+
 export async function get_starboard(channel) {
     do {
         const id = await get_setting(`starboard.${channel.id}`);

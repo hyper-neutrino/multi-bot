@@ -5,7 +5,7 @@ import {
     unlink_supporter_role,
 } from "../lib/supporter-announcements.js";
 
-export default [
+export const command = [
     new Command({
         name: "supporter-announcement set",
         description:

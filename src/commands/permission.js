@@ -9,7 +9,7 @@ import {
 } from "../lib/permissions.js";
 import { fetch_snowflake } from "../lib/utils.js";
 
-export default [
+export const command = [
     new Command({
         name: "permission grant",
         description: "Grant a permission to a user or role.",

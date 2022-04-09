@@ -9,6 +9,8 @@ import XRegExp from "xregexp";
 import { is_loggable, is_logger_ignoring } from "../lib/message-logs.js";
 import { create_gist } from "../lib/gist.js";
 
+export const module = "logs";
+
 // regexes taken from leaf:
 // https://github.com/Teyvat-Collective-Network/relay-bot/blob/6a1ec9746b0af8248e681d46e6816b8116c7b3dc/events/messageUpdate.js#L9
 // leaf op
@@ -16,7 +18,7 @@ import { create_gist } from "../lib/gist.js";
 const escape_regex = XRegExp("(?<!\\\\)((?:\\\\\\\\)*)([\\[\\]\\(\\)*~_`])");
 const trim_regex = /^(\s*)(.*?)(\s*)$/;
 
-export default [
+export const event = [
     new Event({
         event: "messageUpdate",
 

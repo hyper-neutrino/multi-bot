@@ -7,6 +7,8 @@ import {
     get_setting_role,
 } from "./settings.js";
 
+await db.init("modmail_threads");
+
 export async function is_modmail_channel(channel_id) {
     return !!(await db.modmail_threads.findOne({ channel_id }));
 }

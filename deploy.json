@@ -1,94 +1,22 @@
 {
-    "all": [
-        "permission",
-        "log",
-        "warn",
-        "mute",
-        "unmute",
-        "kick",
-        "ban",
-        "unban",
-        "massban",
-        "massban-from-url",
-        "history",
-        "set-mute-role",
-        "autoroles",
-        "automod",
-        "modmail",
-        "highlight",
-        "message-logs",
-        "purge",
-        "slowmode",
-        "role",
-        "custom-role",
-        "co-op",
-        "co-op-settings",
-        "supporter-announcement",
-        "nukeguard",
-        "poll",
-        "say",
-        "send",
-        "reaction-role",
-        "reminder",
-        "stick",
-        "stick-stop",
-        "welcome",
-        "suggest",
-        "suggestion",
-        "stats-channel",
-        "starboard",
-        "trigger",
-        "count",
-        "music",
-        "choose",
-        "clone",
-        "webhook",
-        "point",
-        "info",
-        "avatar",
-        "Edit",
-        "User History",
-        "Flag Message",
-        "Report User",
-        "Purge Start",
-        "Purge End"
-    ],
     "guilds": {
         "shm": {
             "id": "805458032908959804",
             "owners": ["251082987360223233"],
-            "commands": []
+            "modules": [
+                "automod", "autoroles", "co-op", "count", "custom-roles", "fun", "highlights", "logs", "moderation",
+                "modmail", "music", "nukeguard", "polls", "reminders", "report", "starboard", "suggestions",
+                "utility", "welcome"
+            ]
         },
         "test": {
             "id": "927153548339343360",
             "owners": ["251082987360223233"],
-            "commands": []
+            "modules": [
+                "automod", "autoroles", "co-op", "count", "custom-roles", "fun", "highlights", "logs", "moderation",
+                "modmail", "music", "nukeguard", "polls", "reminders", "report", "starboard", "suggestions",
+                "utility", "welcome"
+            ]
         }
-    },
-    "collections": [
-        "permissions",
-        "settings",
-        "history",
-        "counters",
-        "schedule",
-        "autoroles",
-        "automod",
-        "automod_ignores",
-        "modmail_threads",
-        "highlights",
-        "logger_ignores",
-        "webhooks",
-        "custom_roles",
-        "supporter_announcements",
-        "protected_channels",
-        "polls",
-        "poll_votes",
-        "stickies",
-        "suggestions",
-        "stats_channels",
-        "starboard",
-        "triggers",
-        "count_channels",
-        "counterboard"
-    ]
+    }
 }

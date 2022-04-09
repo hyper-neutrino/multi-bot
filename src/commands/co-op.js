@@ -7,7 +7,9 @@ import {
     set_setting,
 } from "../lib/settings.js";
 
-export default [
+export const module = "co-op";
+
+export const command = [
     new Command({
         name: "co-op",
         description: "Ask for co-op help. Region/WL are optional with roles.",

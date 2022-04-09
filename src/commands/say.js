@@ -1,6 +1,6 @@
 import { Command } from "paimon.js";
 
-export default new Command({
+export const command = new Command({
     name: "say",
     description: "Say a message (as a regular message).",
     options: [

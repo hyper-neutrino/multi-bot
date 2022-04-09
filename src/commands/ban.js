@@ -10,7 +10,9 @@ import {
 import ban from "../moderation/ban.js";
 import { link_origin, mod_fail } from "../moderation/utils.js";
 
-export default new Command({
+export const module = "moderation";
+
+export const command = new Command({
     name: "ban",
     description: "Ban a user.",
     options: [

@@ -1,7 +1,9 @@
 import { Command } from "paimon.js";
 import { get_setting } from "../lib/settings.js";
 
-export default [
+export const module = "fun";
+
+export const command = [
     new Command({
         name: "choose",
         description: "Randomly choose one of up to 10 options.",

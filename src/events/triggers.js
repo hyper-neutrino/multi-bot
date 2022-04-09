@@ -3,7 +3,7 @@ import client from "../client.js";
 import { get_triggers, use_trigger } from "../lib/triggers.js";
 import { recursive_edit, translate } from "../lib/utils.js";
 
-export default new Event({
+export const event = new Event({
     event: "messageCreate",
 
     async run(message) {

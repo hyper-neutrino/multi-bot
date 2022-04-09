@@ -1,6 +1,6 @@
 import { Event } from "paimon.js";
 
-export default new Event({
+export const event = new Event({
     event: "interactionCreate",
 
     async run(interaction) {

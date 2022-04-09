@@ -3,7 +3,9 @@ import client from "../client.js";
 import { get_autoroles, set_autoroles } from "../lib/autoroles.js";
 import { get_setting_role } from "../lib/settings.js";
 
-export default [
+export const module = "autoroles";
+
+export const event = [
     new Event({
         event: "guildMemberRemove",
 

@@ -4,7 +4,9 @@ import { post_modal } from "../lib/modals.js";
 import massban from "../moderation/massban.js";
 import fetch from "node-fetch";
 
-export default [
+export const module = "moderation";
+
+export const command = [
     new Command({
         name: "massban",
         description:

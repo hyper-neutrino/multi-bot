@@ -14,7 +14,9 @@ import { has_permission } from "../lib/permissions.js";
 import { get_setting } from "../lib/settings.js";
 import { escape_regex } from "../lib/utils.js";
 
-export default new Event({
+export const module = "modmail";
+
+export const event = new Event({
     event: "messageCreate",
 
     async run(message) {

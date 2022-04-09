@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+await db.init("webhooks");
+
 export async function get_webhook(channel, key) {
     const entry = await db.webhooks.findOne({ channel_id: channel.id, key });
     let hook;

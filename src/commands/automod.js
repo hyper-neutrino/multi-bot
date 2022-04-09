@@ -15,7 +15,6 @@ import { expand } from "../lib/format.js";
 import { stem } from "../lib/natural.js";
 import { pagify } from "../lib/pages.js";
 import { get_setting } from "../lib/settings.js";
-import { group } from "../lib/utils.js";
 
 const types = ["word", "substring", "boundary"];
 const type = ["s:type the type of match"].concat(types);
@@ -24,7 +23,9 @@ const action = ["s:action the action to take on match"].concat(actions);
 
 const hidden = "b:hidden* set to true to hide the response";
 
-export default [
+export const module = "automod";
+
+export const command = [
     new Command({
         name: "automod add",
         description: "Add a term to the automoderator's scan list.",

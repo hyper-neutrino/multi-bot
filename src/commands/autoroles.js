@@ -3,7 +3,9 @@ import { add_autorole, get_autoroles, rm_autorole } from "../lib/autoroles.js";
 import { expand } from "../lib/format.js";
 import { get_setting_role, set_setting } from "../lib/settings.js";
 
-export default [
+export const module = "autoroles";
+
+export const command = [
     new Command({
         name: "autoroles threshold set",
         description:

@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+await db.init("triggers");
+
 export async function create_trigger(data) {
     await db.triggers.insertOne({ count: 0, ...data });
 }

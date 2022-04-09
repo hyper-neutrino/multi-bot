@@ -1,9 +1,10 @@
 import { Command } from "paimon.js";
-import { post_modal } from "../lib/modals.js";
 import { create_poll } from "../lib/polls.js";
 import { get_setting } from "../lib/settings.js";
 
-export default [
+export const module = "polls";
+
+export const command = [
     new Command({
         name: "poll yes-no",
         description: "Post a yes/no poll.",

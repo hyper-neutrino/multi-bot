@@ -2,7 +2,9 @@ import { Command } from "paimon.js";
 import { expand } from "../lib/format.js";
 import unban from "../moderation/unban.js";
 
-export default new Command({
+export const module = "moderation";
+
+export const command = new Command({
     name: "unban",
     description: "Unban a user.",
     options: [

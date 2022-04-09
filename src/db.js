@@ -8,11 +8,11 @@ db.client = db_client;
 
 await db_client.connect();
 
-for (const name of config.collections) {
-    if (!db.collection(name)) {
-        await db.createCollection(name);
-    }
+db.init = async function (name) {
+    if (!db.collection(name)) await db.createCollection(name);
     db[name] = db.collection(name);
-}
+};
+
+await db.init("counters");
 
 export default db;

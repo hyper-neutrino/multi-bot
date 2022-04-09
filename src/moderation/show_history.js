@@ -3,6 +3,8 @@ import { tag_user, timestamp, unparse_duration } from "../lib/format.js";
 import { pagify } from "../lib/pages.js";
 import { get_setting } from "../lib/settings.js";
 
+await db.init("history");
+
 export default async function (cmd, user, filter, ephemeral) {
     const entries = await db.history
         .find({

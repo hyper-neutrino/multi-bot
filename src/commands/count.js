@@ -10,7 +10,9 @@ import { expand } from "../lib/format.js";
 import { pagify } from "../lib/pages.js";
 import { get_setting } from "../lib/settings.js";
 
-export default [
+export const module = "count";
+
+export const command = [
     new Command({
         name: "count create",
         description: "Initialize a count channel.",

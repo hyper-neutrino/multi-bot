@@ -4,7 +4,7 @@ import { get_setting, get_setting_channel } from "../lib/settings.js";
 import { get_supporter_announcement } from "../lib/supporter-announcements.js";
 import { recursive_edit, translate } from "../lib/utils.js";
 
-export default new Event({
+export const event = new Event({
     event: "guildMemberUpdate",
 
     async run(before, after) {

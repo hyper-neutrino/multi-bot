@@ -3,7 +3,9 @@ import { b2e, DM_STATUSES, expand } from "../lib/format.js";
 import { get_setting_role } from "../lib/settings.js";
 import unmute from "../moderation/unmute.js";
 
-export default new Command({
+export const module = "moderation";
+
+export const command = new Command({
     name: "unmute",
     description: "Unmute a user.",
     options: [

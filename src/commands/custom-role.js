@@ -7,7 +7,9 @@ import {
 import { expand } from "../lib/format.js";
 import { set_setting } from "../lib/settings.js";
 
-export default [
+export const module = "custom-roles";
+
+export const command = [
     new Command({
         name: "custom-role claim",
         description: "Claim a custom role.",

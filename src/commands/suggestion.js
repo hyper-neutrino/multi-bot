@@ -4,7 +4,9 @@ import { next_id } from "../lib/dbutils.js";
 import { get_setting, get_setting_channel } from "../lib/settings.js";
 import { create_suggestion, get_suggestion_by_id } from "../lib/suggestions.js";
 
-export default [
+export const module = "suggestions";
+
+export const command = [
     new Command({
         name: "suggest",
         description: "Suggest a server change, feature, etc.",

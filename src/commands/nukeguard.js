@@ -2,7 +2,9 @@ import { Command } from "paimon.js";
 import { expand } from "../lib/format.js";
 import { protect_channel, unprotect_channel } from "../lib/nukeguard.js";
 
-export default [
+export const module = "nukeguard";
+
+export const command = [
     new Command({
         name: "nukeguard channel protect",
         description: "Protect a channel with nukeguard.",

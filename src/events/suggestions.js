@@ -1,7 +1,9 @@
 import { Event } from "paimon.js";
 import { get_suggestion, suggestion_vote } from "../lib/suggestions.js";
 
-export default new Event({
+export const module = "suggestions";
+
+export const event = new Event({
     event: "interactionCreate",
 
     async run(interaction) {

@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+await db.init("protected_channels");
+
 export async function protect_channel(channel_id) {
     await db.protected_channels.findOneAndUpdate(
         { channel_id },

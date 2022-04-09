@@ -1,7 +1,9 @@
 import { Command } from "paimon.js";
 import { set_setting } from "../lib/settings.js";
 
-export default new Command({
+export const module = "welcome";
+
+export const command = new Command({
     name: "welcome message set",
     description: "Set the welcome message as template JSON.",
     options: ["s:message the message data (as JSON)"],

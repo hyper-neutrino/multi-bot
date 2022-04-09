@@ -11,7 +11,9 @@ import { has_permission } from "../lib/permissions.js";
 import { get_setting, set_setting } from "../lib/settings.js";
 import { parse_message_link } from "../lib/utils.js";
 
-export default [
+export const module = "utility";
+
+export const command = [
     new Command({
         name: "clone",
         description: "Clone a message exactly.",

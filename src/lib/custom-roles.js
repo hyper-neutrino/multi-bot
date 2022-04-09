@@ -2,6 +2,8 @@ import client from "../client.js";
 import db from "../db.js";
 import { get_setting_role } from "./settings.js";
 
+await db.init("custom_roles");
+
 export async function has_custom_role(member) {
     return await db.custom_roles.findOne({ user_id: member.id });
 }

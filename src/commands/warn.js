@@ -3,7 +3,9 @@ import { b2e, DM_STATUSES, expand } from "../lib/format.js";
 import { link_origin, mod_fail } from "../moderation/utils.js";
 import warn from "../moderation/warn.js";
 
-export default new Command({
+export const module = "moderation";
+
+export const command = new Command({
     name: "warn",
     description: "Warn a user.",
     options: [

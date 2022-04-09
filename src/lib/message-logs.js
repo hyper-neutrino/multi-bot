@@ -2,6 +2,8 @@ import client from "../client.js";
 import db from "../db.js";
 import { purge_log_skip } from "../events/message-logs.js";
 
+await db.init("logger_ignores");
+
 export async function add_logger_ignore(channel_id) {
     await db.logger_ignores.findOneAndUpdate(
         { channel_id },

@@ -2,7 +2,7 @@ import { Command } from "paimon.js";
 import { bind_channel, unbind_channel } from "../lib/stats-channels.js";
 import { expand } from "../lib/format.js";
 
-export default [
+export const command = [
     new Command({
         name: "stats-channel set",
         description: "Set a channel to be a stats channel.",

@@ -7,7 +7,9 @@ import {
     unset_poll_vote,
 } from "../lib/polls.js";
 
-export default new Event({
+export const module = "polls";
+
+export const event = new Event({
     event: "interactionCreate",
 
     async run(interaction) {

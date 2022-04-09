@@ -6,7 +6,7 @@ import {
     link_stick,
 } from "../lib/sticky-messages.js";
 
-export default new Event({
+export const event = new Event({
     event: "messageCreate",
 
     async run(message) {

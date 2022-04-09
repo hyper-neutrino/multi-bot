@@ -10,10 +10,7 @@ client.on("ready", async () => {
     await client.init();
     await client.deploy({
         guild_id: object.id,
-        commands:
-            process.argv.length > 3
-                ? [process.argv[3]]
-                : config.all.concat(object.commands),
+        commands: process.argv.length > 3 ? process.argv.slice(3) : undefined,
         log: true,
     });
     console.log("Done; logging out.");

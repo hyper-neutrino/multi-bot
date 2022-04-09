@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+await db.init("stickies");
+
 export async function set_stick(channel_id, content) {
     await db.stickies.findOneAndUpdate(
         { channel_id },

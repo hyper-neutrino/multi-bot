@@ -2,7 +2,9 @@ import { Command } from "paimon.js";
 import { expand } from "../lib/format.js";
 import { set_setting } from "../lib/settings.js";
 
-export default [
+export const module = "starboard";
+
+export const command = [
     new Command({
         name: "starboard default set",
         description: "Set the default starboard channel.",

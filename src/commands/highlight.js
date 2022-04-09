@@ -9,7 +9,9 @@ import { stem } from "../lib/natural.js";
 import { pagify } from "../lib/pages.js";
 import { get_setting } from "../lib/settings.js";
 
-export default [
+export const module = "highlights";
+
+export const command = [
     new Command({
         name: "highlight add",
         description: "Add a term to your highlights.",

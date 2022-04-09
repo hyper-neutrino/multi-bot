@@ -1,6 +1,9 @@
 import db from "../db.js";
 import { stem, tokenize } from "./natural.js";
 
+await db.init("automod");
+await db.init("automod_ignores");
+
 export async function add_automod_term(type, match, action) {
     await db.automod.insertOne({ type, match, action });
 }

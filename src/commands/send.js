@@ -1,7 +1,7 @@
 import { Command } from "paimon.js";
 import { post_modal } from "../lib/modals.js";
 
-export default new Command({
+export const command = new Command({
     name: "send",
     description: "Send a JSON message.",
     options: [],

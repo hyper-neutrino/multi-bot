@@ -1,7 +1,7 @@
 import { Command } from "paimon.js";
 import { post_modal } from "../lib/modals.js";
 
-export default new Command({
+export const command = new Command({
     name: "reaction-role create",
     description: "Create a reaction role prompt.",
     options: [

@@ -2,7 +2,7 @@ import { Command } from "paimon.js";
 import { expand } from "../lib/format.js";
 import { has_permission } from "../lib/permissions.js";
 
-export default [
+export const command = [
     new Command({
         name: "role add",
         description: "Grant a role to a member.",

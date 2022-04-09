@@ -2,7 +2,9 @@ import { Event } from "paimon.js";
 import { get_setting, get_setting_channel } from "../lib/settings.js";
 import { recursive_edit, translate } from "../lib/utils.js";
 
-export default new Event({
+export const module = "welcome";
+
+export const event = new Event({
     event: "guildMemberAdd",
 
     async run(member) {

@@ -2,7 +2,9 @@ import { Command } from "paimon.js";
 import { expand } from "../lib/format.js";
 import { set_setting } from "../lib/settings.js";
 
-export default new Command({
+export const module = "moderation";
+
+export const command = new Command({
     name: "set-mute-role",
     description: "Set the mute role.",
     options: ["r:role the role to set"],

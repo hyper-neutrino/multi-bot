@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+await db.init("suggestions");
+
 export async function create_suggestion(message_id, user_id, id) {
     await db.suggestions.insertOne({
         id,

@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+await db.init("autoroles");
+
 export async function set_autoroles(user_id, roles) {
     await db.autoroles.findOneAndUpdate(
         { user_id },

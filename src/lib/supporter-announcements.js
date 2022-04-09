@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+await db.init("supporter_announcements");
+
 export async function link_supporter_role(role_id, data) {
     await db.supporter_announcements.findOneAndUpdate(
         {

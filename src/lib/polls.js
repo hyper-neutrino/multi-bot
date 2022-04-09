@@ -1,5 +1,8 @@
 import db from "../db.js";
 
+await db.init("polls");
+await db.init("poll_votes");
+
 export async function create_poll(message, options, type) {
     await db.polls.findOneAndUpdate(
         { message_id: message.id },

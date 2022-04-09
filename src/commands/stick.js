@@ -7,7 +7,7 @@ import {
     unstick,
 } from "../lib/sticky-messages.js";
 
-export default [
+export const command = [
     new Command({
         name: "stick",
         description: "Set this channel's sticky message.",

@@ -6,7 +6,7 @@ import {
     rm_trigger,
 } from "../lib/triggers.js";
 
-export default [
+export const command = [
     new Command({
         name: "trigger add",
         description: "Add an autoresponder trigger.",

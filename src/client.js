@@ -1,12 +1,11 @@
-import { res } from "file-ez";
-import { Client, load_all } from "paimon.js";
+import { recursive, res } from "file-ez";
+import { Client } from "paimon.js";
 import { log } from "./logging.js";
 import { expand } from "./lib/format.js";
 import { create_permission, has_permission } from "./lib/permissions.js";
 import { get_setting } from "./lib/settings.js";
 import object from "./guild_scope.js";
-import config from "./config.js";
-import { post_modal, resolvers } from "./lib/modals.js";
+import { resolvers } from "./lib/modals.js";
 import { is_string } from "./lib/utils.js";
 import StickerCache from "./lib/sticker_cache.js";
 
@@ -143,18 +142,28 @@ export default client;
 
 client.stickerCache = new StickerCache(client, "cache");
 
+client.command_set = new Set();
+
 client.init = async function () {
-    const include = new Set(config.all.concat(object.commands));
-    for (const command of await load_all(res("./commands"))) {
-        if (!include.has(command.command ?? command.name)) continue;
-        this.add_command(command);
-        const key = command.extras.permission;
-        if (key && key != "@everyone") {
-            create_permission(key);
+    const include = new Set(object.modules);
+
+    for (const path of await recursive(res("./commands"))) {
+        const { module, command } = await import(path);
+        if (module && !include.has(module)) continue;
+        for (const cmd of [command].flat()) {
+            this.add_command(cmd);
+            this.command_set.add(cmd.command);
+            const key = cmd.extras.permission;
+            if (key && key != "@everyone") {
+                create_permission(key);
+            }
         }
     }
-    for (const event of await load_all(res("./events"))) {
-        this.on(event.event, event.run);
+
+    for (const path of await recursive(res("./events"))) {
+        const { module, event } = await import(path);
+        if (module && !include.has(module)) continue;
+        for (const e of [event].flat()) this.on(e.event, e.run);
     }
 };
 

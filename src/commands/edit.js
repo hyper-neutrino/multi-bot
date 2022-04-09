@@ -3,7 +3,7 @@ import client from "../client.js";
 import { copy_attachments } from "../lib/message_utils.js";
 import { post_modal } from "../lib/modals.js";
 
-export default new MessageCommand({
+export const command = new MessageCommand({
     name: "Edit",
     async execute(cmd, message) {
         let webhook;

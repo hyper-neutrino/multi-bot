@@ -1,10 +1,11 @@
 import { MessageCommand, UserCommand } from "paimon.js";
-import { expand } from "../lib/format.js";
 import { copy_attachments } from "../lib/message_utils.js";
 import { post_modal } from "../lib/modals.js";
 import { get_setting_channel } from "../lib/settings.js";
 
-export default [
+export const module = "report";
+
+export const command = [
     new MessageCommand({
         name: "Flag Message",
         async execute(cmd, message) {

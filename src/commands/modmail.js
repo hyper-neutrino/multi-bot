@@ -16,7 +16,9 @@ import {
     set_setting,
 } from "../lib/settings.js";
 
-export default [
+export const module = "modmail";
+
+export const command = [
     new Command({
         name: "modmail close",
         description: "Close the current modmail thread.",

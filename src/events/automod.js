@@ -11,7 +11,9 @@ import kick from "../moderation/kick.js";
 import ban from "../moderation/ban.js";
 import { link_origin } from "../moderation/utils.js";
 
-export default [
+export const module = "automod";
+
+export const event = [
     new Event({
         event: "messageCreate",
 

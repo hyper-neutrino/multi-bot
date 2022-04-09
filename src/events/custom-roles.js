@@ -2,7 +2,9 @@ import { Event } from "paimon.js";
 import { destroy_custom_role } from "../lib/custom-roles.js";
 import { has_permission } from "../lib/permissions.js";
 
-export default [
+export const module = "custom-roles";
+
+export const event = [
     new Event({
         event: "guildMemberUpdate",
 

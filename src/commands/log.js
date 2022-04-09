@@ -13,7 +13,7 @@ const choices = [
     ["Suggestions (/suggest)", "suggestions"],
 ];
 
-export default [
+export const command = [
     new Command({
         name: "log set",
         description: "Set the logging channel.",

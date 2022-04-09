@@ -1,7 +1,8 @@
 import client from "../client.js";
-import config from "../config.js";
 import db from "../db.js";
 import object from "../guild_scope.js";
+
+await db.init("permissions");
 
 export async function add_permission(key, snowflake) {
     await db.permissions.findOneAndUpdate(

@@ -1,5 +1,8 @@
 import db from "../db.js";
 
+await db.init("count_channels");
+await db.init("counterboard");
+
 export async function set_counter(channel_id, count) {
     await db.count_channels.findOneAndUpdate(
         { channel_id },

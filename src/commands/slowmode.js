@@ -1,7 +1,9 @@
 import { Command } from "paimon.js";
 import { expand } from "../lib/format.js";
 
-export default [
+export const module = "moderation";
+
+export const command = [
     new Command({
         name: "slowmode",
         description: "Set a channel's slowmode (in seconds).",

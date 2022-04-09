@@ -2,7 +2,9 @@ import { Command, UserCommand } from "paimon.js";
 import db from "../db.js";
 import show_history from "../moderation/show_history.js";
 
-export default [
+export const module = "moderation";
+
+export const command = [
     new Command({
         name: "history get",
         description: "Get a user's history.",

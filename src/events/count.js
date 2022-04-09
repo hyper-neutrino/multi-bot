@@ -2,7 +2,9 @@ import { Event } from "paimon.js";
 import client from "../client.js";
 import { get_counter, increment_counter } from "../lib/count.js";
 
-export default [
+export const module = "count";
+
+export const event = [
     new Event({
         event: "messageCreate",
 

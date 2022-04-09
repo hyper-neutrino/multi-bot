@@ -3,7 +3,9 @@ import { expand } from "../lib/format.js";
 import { is_protected_channel } from "../lib/nukeguard.js";
 import { get_setting_channel } from "../lib/settings.js";
 
-export default [
+export const module = "nukeguard";
+
+export const event = [
     new Event({
         event: "channelDelete",
 

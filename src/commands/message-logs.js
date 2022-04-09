@@ -6,7 +6,9 @@ import {
     rm_logger_ignore,
 } from "../lib/message-logs.js";
 
-export default [
+export const module = "logs";
+
+export const command = [
     new Command({
         name: "message-logs ignore add",
         description:

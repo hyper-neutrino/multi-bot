@@ -3,6 +3,8 @@ import db from "../db.js";
 import { rm_autorole } from "./autoroles.js";
 import { get_setting } from "./settings.js";
 
+await db.init("schedule");
+
 export async function schedule(key, data, duration) {
     const time = new Date();
     time.setMilliseconds(time.getMilliseconds() + duration);

@@ -2,6 +2,8 @@ import client from "../client.js";
 import db from "../db.js";
 import { dict_format, user_count } from "./utils.js";
 
+await db.init("stats_channels");
+
 export async function bind_channel(channel_id, format) {
     await db.stats_channels.findOneAndUpdate(
         { channel_id },

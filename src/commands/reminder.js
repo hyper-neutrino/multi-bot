@@ -10,7 +10,9 @@ import {
 } from "../lib/scheduler.js";
 import { get_setting } from "../lib/settings.js";
 
-export default [
+export const module = "reminders";
+
+export const command = [
     new Command({
         name: "reminder set",
         description: "Set a reminder.",

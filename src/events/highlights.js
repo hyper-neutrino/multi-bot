@@ -4,21 +4,9 @@ import { get_highlighting_users, get_highlights } from "../lib/highlights.js";
 import { stem } from "../lib/natural.js";
 import { get_setting } from "../lib/settings.js";
 
-const last_ping = new Map();
-const cooldown = 300000;
+export const module = "highlights";
 
-function can_ping(channel, user) {
-    const key = `${channel.id}/${user.id}`;
-    if (!last_ping.has(key)) return true;
-    return new Date() - last_ping.get(key) >= cooldown;
-}
-
-function apply_ping(channel, user) {
-    const key = `${channel.id}/${user.id}`;
-    last_ping.set(key, new Date());
-}
-
-export default new Event({
+export const event = new Event({
     event: "messageCreate",
 
     async run(message) {
@@ -101,3 +89,17 @@ export default new Event({
         }
     },
 });
+
+const last_ping = new Map();
+const cooldown = 300000;
+
+function can_ping(channel, user) {
+    const key = `${channel.id}/${user.id}`;
+    if (!last_ping.has(key)) return true;
+    return new Date() - last_ping.get(key) >= cooldown;
+}
+
+function apply_ping(channel, user) {
+    const key = `${channel.id}/${user.id}`;
+    last_ping.set(key, new Date());
+}

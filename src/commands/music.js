@@ -18,7 +18,9 @@ import { shuffle } from "../lib/utils.js";
 import { pagify } from "../lib/pages.js";
 import { get_setting } from "../lib/settings.js";
 
-export default [
+export const module = "music";
+
+export const command = [
     new Command({
         name: "music play",
         description:

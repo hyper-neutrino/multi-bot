@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+await db.init("highlights");
+
 export async function add_highlight(user_id, term) {
     await db.highlights.insertOne({ user_id, term });
 }

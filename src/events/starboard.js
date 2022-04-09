@@ -9,7 +9,9 @@ import {
     get_star_link,
 } from "../lib/starboard.js";
 
-export default [
+export const module = "starboard";
+
+export const event = [
     new Event({ event: "messageReactionAdd", run: check_stars }),
     new Event({ event: "messageReactionRemove", run: check_stars }),
     new Event({ event: "messageReactionRemoveAll", run: check_stars }),
@@ -31,7 +33,7 @@ async function check_stars(message) {
     message = message.message || message;
     if (message.content == null) await message.fetch();
 
-    if (!message.guild.id == client.home.id) return;
+    if (!message.guild || message.guild.id != client.home.id) return;
 
     const starboard = await get_starboard(message.channel);
     if (!starboard) return;

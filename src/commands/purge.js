@@ -2,10 +2,11 @@ import { Command, is_string, MessageCommand } from "paimon.js";
 import { log_delete_bulk, purge_log_skip } from "../events/message-logs.js";
 import { expand } from "../lib/format.js";
 import { is_loggable, is_logger_ignoring } from "../lib/message-logs.js";
-import { has_permission } from "../lib/permissions.js";
 import { parse_message_link } from "../lib/utils.js";
 
-export default [
+export const module = "moderation";
+
+export const command = [
     new Command({
         name: "purge last",
         description: "Purge the last N (2 - 100) messages.",
@@ -87,6 +88,7 @@ export default [
                 message.url
             }> as the last message to purge.`;
         },
+        permission: "purge-more",
     }),
 ];
 
