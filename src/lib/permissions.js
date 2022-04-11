@@ -101,12 +101,7 @@ const permission_bindings = {
     "reaction-role": ["MANAGE_GUILD"],
     role: ["MANAGE_ROLES"],
     "role-admin": [],
-    immunity: [
-        "MANAGE_MESSAGES",
-        "MODERATE_MEMBERS",
-        "KICK_MEMBERS",
-        "BAN_MEMBERS",
-    ],
+    immunity: [],
     send: [],
     setting: [],
     slowmode: ["MANAGE_MESSAGES", "MANAGE_CHANNELS"],
