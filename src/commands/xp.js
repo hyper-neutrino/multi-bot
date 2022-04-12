@@ -37,10 +37,24 @@ export const command = [
             "View your / another user's XP and rank within the server.",
         options: ["u:user* the user (default yourself)"],
         async execute(cmd, user) {
+            await cmd.deferReply();
+
             user ??= cmd.user;
             const profile = await get_xp(user.id);
 
-            return `Your XP: text: ${profile["all-time"].text}, voice: ${profile["all-time"].voice}`;
+            await cmd.editReply({
+                embeds: [
+                    {
+                        title: "XP Rank (placeholder)",
+                        description: `This is just a placeholder until I implement this feature fully. Your text XP is ${Math.floor(
+                            profile["all-time"].text
+                        )}. Your voice XP is ${Math.floor(
+                            profile["all-time"].voice
+                        )}.`,
+                        color: await get_setting("embed-color"),
+                    },
+                ],
+            });
         },
     }),
 
