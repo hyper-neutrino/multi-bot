@@ -16,7 +16,7 @@ export default async function (mod, id_list, reason, days, origin) {
 
             success.push(user_id);
         } catch {
-            failure_push(user_id);
+            failure.push(user_id);
         }
 
         try {
