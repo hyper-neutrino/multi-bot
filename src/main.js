@@ -12,6 +12,9 @@ client.on("ready", async () => {
     await client.init();
     try {
         client.home = await client.guilds.fetch(object.id);
+        for (const listener of client.home_listeners) {
+            await listener(client.home);
+        }
     } catch {
         console.error(`Could not load the guild with ID ${object.id}.`);
     }

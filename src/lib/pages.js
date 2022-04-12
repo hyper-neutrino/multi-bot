@@ -1,4 +1,4 @@
-export async function pagify(interaction, messages, ephemeral, edit) {
+export async function pagify(interaction, messages, ephemeral, edit, initial) {
     if (messages.length == 0) {
         return await interaction.reply({
             content: "Attempted to return pages, but there was nothing found.",
@@ -10,7 +10,7 @@ export async function pagify(interaction, messages, ephemeral, edit) {
         return await interaction.reply({ ...messages[0], ephemeral });
     }
 
-    let page = 0;
+    let page = initial ?? 0;
 
     messages.forEach((message, index) => {
         if ((message.embeds ?? []).length > 0) {
@@ -24,7 +24,7 @@ export async function pagify(interaction, messages, ephemeral, edit) {
         ? interaction.editReply
         : interaction.reply
     ).bind(interaction)({
-        ...messages[0],
+        ...messages[Math.min(initial, messages.length - 1)],
         components: [
             {
                 type: "ACTION_ROW",

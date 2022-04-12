@@ -140,6 +140,10 @@ const client = new Client({
 
 export default client;
 
+client.home_listeners = [];
+
+client.onHome = (listener) => client.home_listeners.push(listener);
+
 client.stickerCache = new StickerCache(client, "cache");
 
 client.command_set = new Set();

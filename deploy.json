@@ -6,16 +6,17 @@
             "modules": [
                 "automod", "autoroles", "co-op", "count", "custom-roles", "fun", "highlights", "logs", "moderation",
                 "modmail", "music", "nukeguard", "polls", "reminders", "report", "starboard", "suggestions",
-                "utility", "welcome"
+                "utility", "welcome", "xp"
             ]
         },
         "test": {
             "id": "927153548339343360",
             "owners": ["251082987360223233"],
-            "modules": [
+            "modules": ["xp"],
+            "_modules": [
                 "automod", "autoroles", "co-op", "count", "custom-roles", "fun", "highlights", "logs", "moderation",
                 "modmail", "music", "nukeguard", "polls", "reminders", "report", "starboard", "suggestions",
-                "utility", "welcome"
+                "utility", "welcome", "xp"
             ]
         }
     }
