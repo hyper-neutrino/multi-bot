@@ -106,6 +106,61 @@ export const event = [
             await log_delete_bulk(list);
         },
     }),
+
+    new Event({
+        event: "voiceStateUpdate",
+
+        async run(before, after) {
+            if (after.guild.id != client.home.id) return;
+
+            const user = after.member.user;
+            if (user.bot) return;
+
+            const c1 = before.channel;
+            const c2 = after.channel;
+
+            if ((c1 && c1.id) == (c2 && c2.id)) return;
+
+            const logs = await get_setting_channel("logs.message");
+            if (!logs) return;
+
+            if (!c1) {
+                await logs.send({
+                    embeds: [
+                        {
+                            title: `${user.tag} joined a voice channel`,
+                            description: `${expand(user)} joined ${expand(
+                                c2
+                            )}.`,
+                            color: "GREEN",
+                        },
+                    ],
+                });
+            } else if (!c2) {
+                await logs.send({
+                    embeds: [
+                        {
+                            title: `${user.tag} left a voice channel`,
+                            description: `${expand(user)} left ${expand(c1)}.`,
+                            color: "RED",
+                        },
+                    ],
+                });
+            } else {
+                await logs.send({
+                    embeds: [
+                        {
+                            title: `${user.tag} switched voice channels`,
+                            description: `${expand(user)} moved from ${expand(
+                                c1
+                            )} to ${expand(c2)}`,
+                            color: "GOLD",
+                        },
+                    ],
+                });
+            }
+        },
+    }),
 ];
 
 async function log_delete(message, hook) {
