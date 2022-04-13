@@ -55,7 +55,11 @@ export const command = [
 
                 const entries = filtered
                     .slice(offset, size * page)
-                    .map((x, i) => [x, i + offset, i == index ? "**" : ""]);
+                    .map((x, i) => [
+                        x,
+                        i + offset,
+                        i + offset == index ? "**" : "",
+                    ]);
 
                 if (self) {
                     if (index < offset)
@@ -72,9 +76,11 @@ export const command = [
                         entries
                             .map(
                                 ([x, i, k]) =>
-                                    `${k}\`#${i + 1}.\` <@${x.user_id}> - \`${
+                                    `${k}\`#${i + 1}.\` <@${
+                                        x.user_id
+                                    }> - \`${Math.floor(
                                         x.scores[subtype]
-                                    }\`${k}`
+                                    )}\`${k}`
                             )
                             .join("\n") || "_[empty]_",
                     inline: true,
