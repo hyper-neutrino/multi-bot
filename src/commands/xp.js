@@ -59,12 +59,10 @@ export const command = [
 
                 if (self) {
                     if (index < offset)
-                        entries.splice(0, 0, [[self, index, "**"]]);
+                        entries.splice(0, 0, [self, index, "**"]);
                     if (index >= offset + size)
                         entries.push([self, index, "**"]);
                 }
-
-                console.log(entries);
 
                 fields.push({
                     name: `${subtype[0].toUpperCase()}${subtype.substring(
