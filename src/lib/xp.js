@@ -38,5 +38,5 @@ export async function reset_leaderboard(duration) {
     const $set = {};
     $set[duration] = { text: 0, voice: 0 };
 
-    await db.xp.update({}, { $set });
+    await db.xp.updateMany({}, { $set });
 }

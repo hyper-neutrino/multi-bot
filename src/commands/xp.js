@@ -12,36 +12,39 @@ export const command = [
         options: [
             [
                 "s:type* leaderboard type (text / voice)",
-                "text",
-                "voice",
-                "combined",
+                "Text",
+                "Voice",
+                "Combined",
             ],
             [
                 "s:duration* the leaderboard duration",
-                "all-time",
-                "monthly",
-                "weekly",
-                "daily",
+                "All-Time",
+                "Monthly",
+                "Weekly",
+                "Daily",
             ],
             "i:page*:1- the page number to view",
         ],
         async execute(cmd, type, duration, page) {
-            type ??= "combined";
-            duration ??= "all-time";
+            type ??= "Combined";
+            duration ??= "All-Time";
             page ??= 1;
 
             const leaderboard = await get_leaderboard();
-            leaderboard.forEach((entry) => (entry.scores = entry[duration]));
+            const dkey = duration.toLowerCase();
+            leaderboard.forEach((entry) => (entry.scores = entry[dkey]));
 
-            const size = type == "combined" ? 5 : 10;
+            const size = type == "Combined" ? 5 : 10;
             const fields = [];
 
-            for (const subtype of type == "combined"
-                ? ["text", "voice"]
+            for (const subtype of type == "Combined"
+                ? ["Text", "Voice"]
                 : [type]) {
+                const key = subtype.toLowerCase();
+
                 const filtered = leaderboard
-                    .filter((x) => x.scores[subtype] > 0)
-                    .sort((x, y) => y.scores[subtype] - x.scores[subtype]);
+                    .filter((x) => x.scores[key] > 0)
+                    .sort((x, y) => y.scores[key] - x.scores[key]);
 
                 let self, index;
                 for (let i = 0; i < filtered.length; ++i) {
@@ -70,18 +73,16 @@ export const command = [
                 }
 
                 fields.push({
-                    name: `${subtype[0].toUpperCase()}${subtype.substring(
-                        1
-                    )} [${page} / ${Math.ceil(filtered.length / size)}]`,
+                    name: `${subtype} [${page} / ${Math.ceil(
+                        filtered.length / size
+                    )}]`,
                     value:
                         entries
                             .map(
                                 ([x, i, k]) =>
                                     `${k}\`#${i + 1}.\` <@${
                                         x.user_id
-                                    }> - \`${Math.floor(
-                                        x.scores[subtype]
-                                    )}\`${k}`
+                                    }> - \`${Math.floor(x.scores[key])}\`${k}`
                             )
                             .join("\n") || "_[empty]_",
                     inline: true,
@@ -91,7 +92,7 @@ export const command = [
             await cmd.reply({
                 embeds: [
                     {
-                        title: "📋 XP Leaderboard",
+                        title: `📋 ${duration} XP Leaderboard`,
                         fields,
                         color: await get_setting("embed-color"),
                         footer: {
@@ -181,7 +182,7 @@ export const command = [
     }),
 ];
 
-let last_update = new Date(2010, 1);
+let last_update = new Date();
 
 setInterval(async () => {
     const now = new Date();
