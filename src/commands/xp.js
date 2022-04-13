@@ -64,6 +64,8 @@ export const command = [
                         entries.push([self, index, "**"]);
                 }
 
+                console.log(entries);
+
                 fields.push({
                     name: `${subtype[0].toUpperCase()}${subtype.substring(
                         1
