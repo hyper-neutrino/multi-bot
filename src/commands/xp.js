@@ -57,8 +57,12 @@ export const command = [
                     .slice(offset, size * page)
                     .map((x, i) => [x, i + offset, i == index ? "**" : ""]);
 
-                if (index < offset) entries.splice(0, 0, [[self, index, "**"]]);
-                if (index >= offset + size) entries.push([self, index, "**"]);
+                if (self) {
+                    if (index < offset)
+                        entries.splice(0, 0, [[self, index, "**"]]);
+                    if (index >= offset + size)
+                        entries.push([self, index, "**"]);
+                }
 
                 fields.push({
                     name: `${subtype[0].toUpperCase()}${subtype.substring(
