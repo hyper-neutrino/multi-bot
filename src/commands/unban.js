@@ -1,6 +1,7 @@
 import { Command } from "paimon.js";
 import { expand } from "../lib/format.js";
 import unban from "../moderation/unban.js";
+import { reason_fields } from "../moderation/utils.js";
 
 export const module = "moderation";
 
@@ -30,7 +31,7 @@ export const command = new Command({
                     title: `Unbanned ${user.tag}`,
                     description: `${user} was unbanned. DMs are not attempted for unbans.`,
                     color: "GREEN",
-                    fields: reason ? [{ name: "Reason", value: reason }] : [],
+                    fields: await reason_fields(reason),
                 },
             ],
         });

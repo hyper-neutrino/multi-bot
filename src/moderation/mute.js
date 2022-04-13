@@ -5,6 +5,7 @@ import { next_id } from "../lib/dbutils.js";
 import { unparse_duration } from "../lib/format.js";
 import { schedule } from "../lib/scheduler.js";
 import { get_setting, get_setting_role } from "../lib/settings.js";
+import { reason_fields } from "./utils.js";
 
 export default async function (mod, user, reason, dm, duration) {
     const id = await next_id("history");
@@ -38,9 +39,7 @@ export default async function (mod, user, reason, dm, duration) {
                             mod.guild
                         } ${unparse_duration(duration)}`,
                         color: await get_setting("embed-color"),
-                        fields: reason
-                            ? [{ name: "Reason", value: reason }]
-                            : [],
+                        fields: await reason_fields(reason, true),
                         footer: {
                             text: "You can respond to this message to contact staff.",
                         },

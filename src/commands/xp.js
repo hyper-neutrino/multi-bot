@@ -1,6 +1,6 @@
 import { Command } from "paimon.js";
 import { get_setting, set_setting } from "../lib/settings.js";
-import { get_xp } from "../lib/xp.js";
+import { get_leaderboard, get_xp } from "../lib/xp.js";
 
 export const module = "xp";
 
@@ -28,6 +28,71 @@ export const command = [
             type ??= "combined";
             duration ??= "all-time";
             page ??= 1;
+
+            const leaderboard = await get_leaderboard();
+            leaderboard.forEach((entry) => (entry.scores = entry[duration]));
+
+            const size = type == "combined" ? 5 : 10;
+            const fields = [];
+
+            for (const subtype of type == "combined"
+                ? ["text", "voice"]
+                : [type]) {
+                const filtered = leaderboard
+                    .filter((x) => x.scores[subtype] > 0)
+                    .sort((x, y) => y.scores[subtype] - x.scores[subtype]);
+
+                let self, index;
+                for (let i = 0; i < filtered.length; ++i) {
+                    if (filtered[i].user_id == cmd.user.id) {
+                        index = i;
+                        self = filtered[i];
+                        break;
+                    }
+                }
+
+                const offset = size * (page - 1);
+
+                const entries = filtered
+                    .slice(offset, size * page)
+                    .map((x, i) => [x, i + offset, i == index ? "**" : ""]);
+
+                if (index < offset) entries.splice(0, 0, [[self, index, "**"]]);
+                if (index >= offset + size) entries.push([self, index, "**"]);
+
+                fields.push({
+                    name: `${subtype[0].toUpperCase()}${subtype.substring(
+                        1
+                    )} [${page} / ${Math.ceil(filtered.length / size)}]`,
+                    value:
+                        entries
+                            .map(
+                                ([x, i, k]) =>
+                                    `${k}\`#${i + 1}.\` <@${x.user_id}> - \`${
+                                        x.scores[subtype]
+                                    }\`${k}`
+                            )
+                            .join("\n") || "_[empty]_",
+                    inline: true,
+                });
+            }
+
+            await cmd.reply({
+                embeds: [
+                    {
+                        title: "📋 XP Leaderboard",
+                        fields,
+                        color: await get_setting("embed-color"),
+                        footer: {
+                            text: cmd.user.tag,
+                            iconURL: await cmd.member.displayAvatarURL({
+                                dynamic: true,
+                            }),
+                        },
+                        timestamp: new Date(),
+                    },
+                ],
+            });
         },
     }),
 
@@ -45,8 +110,8 @@ export const command = [
             await cmd.editReply({
                 embeds: [
                     {
-                        title: "XP Rank (placeholder)",
-                        description: `This is just a placeholder until I implement this feature fully. Your text XP is ${Math.floor(
+                        title: `XP Rank (placeholder): ${user.tag}`,
+                        description: `This is just a placeholder until I implement this feature fully. Text XP is ${Math.floor(
                             profile["all-time"].text
                         )}. Your voice XP is ${Math.floor(
                             profile["all-time"].voice

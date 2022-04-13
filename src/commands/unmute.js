@@ -2,6 +2,7 @@ import { Command } from "paimon.js";
 import { b2e, DM_STATUSES, expand } from "../lib/format.js";
 import { get_setting_role } from "../lib/settings.js";
 import unmute from "../moderation/unmute.js";
+import { reason_fields } from "../moderation/utils.js";
 
 export const module = "moderation";
 
@@ -33,7 +34,7 @@ export const command = new Command({
                     title: `Unmuted ${user.tag}`,
                     description: `${user} was unmuted ${DM_STATUSES[status]}`,
                     color: status == 2 ? "GOLD" : "GREEN",
-                    fields: reason ? [{ name: "Reason", value: reason }] : [],
+                    fields: await reason_fields(reason),
                 },
             ],
         });

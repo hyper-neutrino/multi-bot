@@ -8,7 +8,7 @@ import {
 } from "../lib/format.js";
 import { get_setting_role } from "../lib/settings.js";
 import mute from "../moderation/mute.js";
-import { link_origin, mod_fail } from "../moderation/utils.js";
+import { link_origin, mod_fail, reason_fields } from "../moderation/utils.js";
 
 export const module = "moderation";
 
@@ -42,7 +42,7 @@ export const command = new Command({
                 dm ? "with DM" : "without DM"
             }`,
             color: "AQUA",
-            fields: reason ? [{ name: "Reason", value: reason }] : [],
+            fields: await reason_fields(reason),
         });
 
         if (!response) return;
@@ -57,7 +57,7 @@ export const command = new Command({
                         duration
                     )} ${DM_STATUSES[status]}.`,
                     color: status == 2 ? "GOLD" : "GREEN",
-                    fields: reason ? [{ name: "Reason", value: reason }] : [],
+                    fields: await reason_fields(reason),
                 },
             ],
             components: [],

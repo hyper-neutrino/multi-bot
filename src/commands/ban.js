@@ -8,7 +8,7 @@ import {
     unparse_duration,
 } from "../lib/format.js";
 import ban from "../moderation/ban.js";
-import { link_origin, mod_fail } from "../moderation/utils.js";
+import { link_origin, mod_fail, reason_fields } from "../moderation/utils.js";
 
 export const module = "moderation";
 
@@ -42,7 +42,7 @@ export const command = new Command({
                 days ? `deleting ${days} day${pluralize(days)} of messages` : ""
             }`,
             color: "AQUA",
-            fields: reason ? [{ name: "Reason", value: reason }] : [],
+            fields: await reason_fields(reason),
         });
 
         if (!response) return;
@@ -65,7 +65,7 @@ export const command = new Command({
                     )} ${DM_STATUSES[status]}.`,
                     color: status == 2 ? "GOLD" : "GREEN",
                     fields: [
-                        reason ? [{ name: "Reason", value: reason }] : [],
+                        await reason_fields(reason),
                         days
                             ? [
                                   {

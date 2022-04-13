@@ -4,6 +4,7 @@ import { next_id } from "../lib/dbutils.js";
 import { unparse_duration } from "../lib/format.js";
 import { schedule } from "../lib/scheduler.js";
 import { get_setting } from "../lib/settings.js";
+import { reason_fields } from "./utils.js";
 
 export default async function (mod, user, reason, dm, duration, days) {
     const id = await next_id("history");
@@ -29,13 +30,7 @@ export default async function (mod, user, reason, dm, duration, days) {
                             mod.guild
                         } ${unparse_duration(duration)}`,
                         color: await get_setting("embed-color"),
-                        fields: (reason
-                            ? [{ name: "Reason", value: reason }]
-                            : []
-                        ).concat({
-                            name: "Appeal",
-                            value: "You can appeal this decision [here](https://forms.gle/ro3hQFDKf35gM2aA7); however, we will not make any promises that your punishment will be reconsidered.",
-                        }),
+                        fields: await reason_fields(reason, true),
                     },
                 ],
             });
