@@ -1,5 +1,4 @@
 import { Command } from "paimon.js";
-import db from "../db.js";
 import { get_setting, set_setting } from "../lib/settings.js";
 import { get_leaderboard, get_xp, reset_leaderboard } from "../lib/xp.js";
 
