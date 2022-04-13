@@ -33,3 +33,10 @@ export async function get_xp(user_id) {
 export async function get_leaderboard() {
     return await db.xp.find({}).toArray();
 }
+
+export async function reset_leaderboard(duration) {
+    const $set = {};
+    $set[duration] = { text: 0, voice: 0 };
+
+    await db.xp.update({}, { $set });
+}

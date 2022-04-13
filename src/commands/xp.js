@@ -1,6 +1,7 @@
 import { Command } from "paimon.js";
+import db from "../db.js";
 import { get_setting, set_setting } from "../lib/settings.js";
-import { get_leaderboard, get_xp } from "../lib/xp.js";
+import { get_leaderboard, get_xp, reset_leaderboard } from "../lib/xp.js";
 
 export const module = "xp";
 
@@ -179,3 +180,23 @@ export const command = [
         permission: "setting",
     }),
 ];
+
+let last_update = new Date(2010, 1);
+
+setInterval(async () => {
+    const now = new Date();
+
+    if (now.getDate() != last_update.getDate()) {
+        await reset_leaderboard("daily");
+
+        if (now.getDay() == 1) {
+            await reset_leaderboard("weekly");
+        }
+
+        if (now.getMonth() != last_update.getMonth()) {
+            await reset_leaderboard("monthly");
+        }
+    }
+
+    last_update = now;
+}, 10000);
