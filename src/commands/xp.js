@@ -293,7 +293,7 @@ export const command = [
         options: [
             "n:xp-per-message*:0- max XP per message",
             "n:xp-delay*:0- max delay for XP scaling (seconds)",
-            "n:xp-per-minute:0- XP per minute in a voice channel",
+            "n:xp-per-minute*:0- XP per minute in a voice channel",
         ],
         async execute(_, xp_per_message, xp_delay, voice_xp) {
             if (xp_per_message !== undefined) {
