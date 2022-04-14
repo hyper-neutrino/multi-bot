@@ -76,9 +76,9 @@ async function voice_xp_change(_, after) {
         last_voice_update.set(user_id, new Date());
         voice_states.set(
             user_id,
-            setInterval(() => {
+            setInterval(async () => {
                 last_voice_update.set(user_id, new Date());
-                add_xp(user_id, 0, 5);
+                add_xp(user_id, 0, (await get_setting("voice-xp")) ?? 5);
             }, 60000)
         );
     } else {
@@ -89,7 +89,8 @@ async function voice_xp_change(_, after) {
             add_xp(
                 user_id,
                 0,
-                (new Date() - last_voice_update.get(user_id)) / 12000
+                ((new Date() - last_voice_update.get(user_id)) / 60000) *
+                    ((await get_setting("voice-xp")) ?? 5)
             );
             last_voice_update.delete(user_id);
         }

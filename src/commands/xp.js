@@ -276,6 +276,8 @@ export const command = [
                             (await get_setting("max-xp-per-message")) ?? 10
                         }\`\nmax delay for XP scaling (seconds): \`${
                             (await get_setting("xp-delay")) ?? 120
+                        }\`\nvoice XP per minute: \`${
+                            (await get_setting("voice-xp")) ?? 5
                         }\``,
                         color: await get_setting("embed-color"),
                     },
@@ -291,8 +293,9 @@ export const command = [
         options: [
             "n:xp-per-message*:0- max XP per message",
             "n:xp-delay*:0- max delay for XP scaling (seconds)",
+            "n:xp-per-minute:0- XP per minute in a voice channel",
         ],
-        async execute(_, xp_per_message, xp_delay) {
+        async execute(_, xp_per_message, xp_delay, voice_xp) {
             if (xp_per_message !== undefined) {
                 await set_setting("max-xp-per-message", xp_per_message);
             }
@@ -301,9 +304,13 @@ export const command = [
                 await set_setting("xp-delay", xp_delay);
             }
 
+            if (voice_xp !== undefined) {
+                await set_setting("voice-xp", voice_xp);
+            }
+
             return [
                 "Updated XP settings.",
-                `= max-xp-per-message: ${xp_per_message}, xp-delay: ${xp_delay}`,
+                `= max-xp-per-message: ${xp_per_message}, xp-delay: ${xp_delay}, voice-xp: ${voice_xp}`,
             ];
         },
         permission: "setting",
