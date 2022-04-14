@@ -181,7 +181,6 @@ export const command = [
                 const level = Math.floor(x2l(xp[key]));
                 const lower = Math.floor(l2x(level));
                 const upper = Math.floor(l2x(level + 1));
-                console.log(xp[key], level, lower, upper);
                 const amt = Math.floor(xp[key]) - lower;
                 const max = upper - lower;
 
