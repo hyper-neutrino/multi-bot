@@ -14,7 +14,9 @@ export const command = new Command({
             }
         }
 
-        return rows.join("\n") || "(none)";
+        return rows.length > 0
+            ? `\`\`\`\n${rows.join("\n")}\n\`\`\``
+            : "(none)";
     },
     permission: "setting",
 });
