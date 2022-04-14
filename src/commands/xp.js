@@ -178,8 +178,11 @@ export const command = [
                 ["text", 0],
                 ["voice", 1],
             ]) {
-                const amt = 69 + index * 148;
-                const max = 420;
+                const level = Math.floor(x2l(xp[key]));
+                const lower = Math.floor(l2x(level));
+                const upper = Math.floor(l2x(level + 1));
+                const amt = Math.floor(xp[key]) - lower;
+                const max = upper - lower;
 
                 const v = index * 87;
 
@@ -199,7 +202,7 @@ export const command = [
 
                 ctx.save();
                 ctx.beginPath();
-                roundRect(ctx, 502, 203 + v, o, 32, 10);
+                roundRect(ctx, 502, 203 + v, Math.max(o, 20), 32, 10);
                 ctx.fillStyle = "#444";
                 ctx.fill();
                 ctx.clip();
@@ -208,7 +211,7 @@ export const command = [
                 ctx.restore();
 
                 ctx.fillStyle = "#bbb";
-                ctx.fillText("ʟᴠʟ XX", 375, 229 + v);
+                ctx.fillText(`ʟᴠʟ ${level}`, 375, 229 + v);
 
                 ctx.font = "16px sans-serif";
                 ctx.fillText(`${key} rank: #${rank[key]}`, 505, 190 + v);
@@ -338,6 +341,14 @@ function constrain_text(ctx, font, text, width, height) {
     );
 
     return size;
+}
+
+function x2l(xp) {
+    return (xp + 20000) ** 0.382 - 20000 ** 0.382;
+}
+
+function l2x(lvl) {
+    return (lvl + 20000 ** 0.382) ** (1 / 0.382) - 20000;
 }
 
 let last_update = new Date();

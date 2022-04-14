@@ -113,3 +113,7 @@ Info commands, user avatar, etc.
 ### welcome
 
 Welcome messages.
+
+### xp
+
+Text and voice XP.
