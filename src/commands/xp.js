@@ -71,6 +71,11 @@ export const command = [
                         entries.push([self, index, "**"]);
                 }
 
+                let ml = 0;
+                for (const [_s, index, _k] of entries) {
+                    ml = Math.max(ml, (index + 1).toString().length);
+                }
+
                 fields.push({
                     name: `${subtype} [${page} / ${Math.ceil(
                         filtered.length / size
@@ -79,7 +84,9 @@ export const command = [
                         entries
                             .map(
                                 ([x, i, k]) =>
-                                    `${k}\`#${i + 1}.\` <@${
+                                    `${k}\`#${(i + 1)
+                                        .toString()
+                                        .padStart(ml)}.\` <@${
                                         x.user_id
                                     }> - \`${Math.floor(x.scores[key])}\`${k}`
                             )
