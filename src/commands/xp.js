@@ -181,6 +181,7 @@ export const command = [
                 const level = Math.floor(x2l(xp[key]));
                 const lower = Math.floor(l2x(level));
                 const upper = Math.floor(l2x(level + 1));
+                console.log(xp[key], level, lower, upper);
                 const amt = Math.floor(xp[key]) - lower;
                 const max = upper - lower;
 
@@ -344,11 +345,12 @@ function constrain_text(ctx, font, text, width, height) {
 }
 
 function x2l(xp) {
-    return (xp + 20000) ** 0.382 - 20000 ** 0.382;
+    return Math.sqrt(4 * xp + 175) / 2 / Math.sqrt(35) - 1 / 2;
 }
 
 function l2x(lvl) {
-    return (lvl + 20000 ** 0.382) ** (1 / 0.382) - 20000;
+    if (lvl == 0) return 0;
+    return 35 * (lvl ** 2 + lvl - 1);
 }
 
 let last_update = new Date();
