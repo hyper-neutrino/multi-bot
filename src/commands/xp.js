@@ -1,6 +1,10 @@
+import canvas from "canvas";
+import { MessageAttachment } from "discord.js";
 import { Command } from "paimon.js";
 import { get_setting, set_setting } from "../lib/settings.js";
 import { get_leaderboard, get_xp, reset_leaderboard } from "../lib/xp.js";
+
+const { Canvas, loadImage } = canvas;
 
 export const module = "xp";
 
@@ -123,21 +127,139 @@ export const command = [
             await cmd.deferReply();
 
             user ??= cmd.user;
+
+            let member;
+            try {
+                member = await cmd.guild.members.fetch(user.id);
+            } catch {}
+
+            const name = member ? member.displayName : user.username;
+
             const profile = await get_xp(user.id);
 
-            await cmd.editReply({
-                embeds: [
-                    {
-                        title: `XP Rank (placeholder): ${user.tag}`,
-                        description: `This is just a placeholder until I implement this feature fully. Text XP is ${Math.floor(
-                            profile["all-time"].text
-                        )}. Your voice XP is ${Math.floor(
-                            profile["all-time"].voice
-                        )}.`,
-                        color: await get_setting("embed-color"),
-                    },
-                ],
-            });
+            const xp = profile["all-time"];
+
+            let rank = { text: 1, voice: 1 };
+
+            for (const entry of await get_leaderboard()) {
+                for (const key of ["text", "voice"]) {
+                    if (entry["all-time"][key] > xp[key]) ++rank[key];
+                }
+            }
+
+            const canvas = new Canvas(1000, 400);
+            const ctx = canvas.getContext("2d");
+
+            try {
+                const background = await loadImage(
+                    `./assets/background-${cmd.guild.id}.png`
+                );
+                ctx.drawImage(background, 0, 0, 1000, 400);
+            } catch {}
+
+            ctx.fillStyle = "#0009";
+            roundRect(ctx, 350, 25, 600, 100, 10);
+            ctx.fill();
+
+            const height = constrain_text(ctx, "sans-serif", name, 550, 60);
+            ctx.fillStyle = "#eee";
+            ctx.fillText(
+                name,
+                650 - ctx.measureText(name).width / 2,
+                75 + height / 3,
+                550
+            );
+
+            ctx.fillStyle = "#00000078";
+            roundRect(ctx, 350, 150, 600, 225, 10);
+            ctx.fill();
+
+            for (const [key, index] of [
+                ["text", 0],
+                ["voice", 1],
+            ]) {
+                const amt = 69 + index * 148;
+                const max = 420;
+
+                const v = index * 87;
+
+                ctx.fillStyle = "#bbb";
+                roundRect(ctx, 500, 201 + v, 400, 36, 10);
+                ctx.fill();
+
+                const o = (396 * amt) / max;
+
+                const str = `${amt} / ${max}`;
+                ctx.font = "30px sans-serif";
+
+                const width = ctx.measureText(str).width;
+
+                ctx.fillStyle = "#444";
+                ctx.fillText(str, 700 - width / 2, 229 + v);
+
+                ctx.save();
+                ctx.beginPath();
+                roundRect(ctx, 502, 203 + v, o, 32, 10);
+                ctx.fillStyle = "#444";
+                ctx.fill();
+                ctx.clip();
+                ctx.fillStyle = "#bbb";
+                ctx.fillText(str, 700 - width / 2, 229 + v);
+                ctx.restore();
+
+                ctx.fillStyle = "#bbb";
+                ctx.fillText("ʟᴠʟ XX", 375, 229 + v);
+
+                ctx.font = "16px sans-serif";
+                ctx.fillText(`${key} rank: #${rank[key]}`, 505, 190 + v);
+
+                const total = `total: ${Math.floor(xp[key])}`;
+                ctx.fillText(
+                    total,
+                    895 - ctx.measureText(total).width,
+                    190 + v
+                );
+            }
+
+            const x = 150,
+                y = 150,
+                r = 100;
+
+            ctx.fillStyle = "#fff5";
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(400, 0);
+            ctx.lineTo(0, 240);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = "#888";
+            ctx.beginPath();
+            ctx.arc(x, y, r + 3, 0, Math.PI * 2, true);
+            ctx.fill();
+
+            ctx.fillStyle = "#eee";
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2, true);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.clip();
+
+            const avatar = await loadImage(
+                await (member ?? user).displayAvatarURL({ format: "png" })
+            );
+
+            ctx.drawImage(avatar, x - r, y - r, r * 2, r * 2);
+
+            const attachment = new MessageAttachment(
+                canvas.toBuffer(),
+                `${user.id}-rank.png`
+            );
+
+            await cmd.editReply({ files: [attachment] });
         },
     }),
 
@@ -187,6 +309,29 @@ export const command = [
         permission: "setting",
     }),
 ];
+
+function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+}
+
+function constrain_text(ctx, font, text, width, height) {
+    let size = height + 1 ?? 61;
+
+    do {
+        ctx.font = `${--size}px ${font}`;
+    } while (
+        (width && ctx.measureText(text).width > width) ||
+        (height && ctx.measureText(text).height > height)
+    );
+
+    return size;
+}
 
 let last_update = new Date();
 
