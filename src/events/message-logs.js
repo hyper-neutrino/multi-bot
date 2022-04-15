@@ -4,19 +4,10 @@ import { expand, timestamp } from "../lib/format.js";
 import { copy_attachments } from "../lib/message_utils.js";
 import { get_setting_channel } from "../lib/settings.js";
 import { get_webhook } from "../lib/webhooks.js";
-import { diffWords } from "diff";
-import XRegExp from "xregexp";
 import { is_loggable, is_logger_ignoring } from "../lib/message-logs.js";
 import { create_gist } from "../lib/gist.js";
 
 export const module = "logs";
-
-// regexes taken from leaf:
-// https://github.com/Teyvat-Collective-Network/relay-bot/blob/6a1ec9746b0af8248e681d46e6816b8116c7b3dc/events/messageUpdate.js#L9
-// leaf op
-
-const escape_regex = XRegExp("(?<!\\\\)((?:\\\\\\\\)*)([\\[\\]\\(\\)*~_`])");
-const trim_regex = /^(\s*)(.*?)(\s*)$/;
 
 export const event = [
     new Event({
@@ -33,34 +24,17 @@ export const event = [
                 embeds: [
                     {
                         title: "Message Edited",
-                        description: diffWords(before.content, after.content)
-                            .map((block) => {
-                                const text = block.value;
-                                if (block.added) {
-                                    return text
-                                        .replace(escape_regex, "$1\\$2")
-                                        .replace(trim_regex, "$1**$2**$3");
-                                } else if (block.removed) {
-                                    return text
-                                        .replace(escape_regex, "$1\\$2")
-                                        .replace(trim_regex, "$1~~$2~~$3");
-                                } else {
-                                    return (
-                                        text.length > 32
-                                            ? `${text.substring(
-                                                  0,
-                                                  16
-                                              )}...${text.substring(
-                                                  text.length - 16
-                                              )}`
-                                            : text
-                                    ).replace(escape_regex, "$1\\$2");
-                                }
-                            })
-                            .join(""),
                         color: "GOLD",
                         url: after.url,
                         fields: [
+                            {
+                                name: "Before",
+                                value: before.content.substring(0, 1024),
+                            },
+                            {
+                                name: "After",
+                                value: after.content.substring(0, 1024),
+                            },
                             {
                                 name: "Author",
                                 value: expand(after.author),
