@@ -61,7 +61,7 @@ export const command = [
         },
         async autocomplete(_, query) {
             return keys.filter(
-                (item) => item.indexOf(query.toLowerCase()) != -1
+                (item) => item.toLowerCase().indexOf(query.toLowerCase()) != -1
             );
         },
         permission: "setting",
