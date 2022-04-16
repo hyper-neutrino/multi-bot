@@ -34,9 +34,7 @@ export async function increment_counter(channel_id, user_id) {
 
 export async function get_counter_score(user_id) {
     const entry = await db.counterboard.findOne({ user_id });
-    if (!entry) return 0;
-
-    return entry.score;
+    return entry?.score ?? 0;
 }
 
 export async function get_counter_scoreboard() {

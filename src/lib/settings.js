@@ -13,8 +13,7 @@ export async function set_setting(key, value) {
 
 export async function get_setting(key) {
     const entry = await db.settings.findOne({ key });
-    if (!entry) return undefined;
-    return entry.value;
+    return entry?.value;
 }
 
 export async function get_setting_role(key) {

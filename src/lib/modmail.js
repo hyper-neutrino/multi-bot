@@ -22,14 +22,12 @@ export async function set_modmail_closed(channel_id, closed) {
 
 export async function get_modmail_user(channel_id) {
     const entry = await db.modmail_threads.findOne({ channel_id });
-    if (!entry) return undefined;
-    return entry.user_id;
+    return entry?.user_id;
 }
 
 export async function is_modmail_closed(channel_id) {
     const entry = await db.modmail_threads.findOne({ channel_id });
-    if (!entry) return undefined;
-    return entry.closed;
+    return entry?.closed;
 }
 
 export async function has_open_modmail(user_id) {
@@ -48,8 +46,7 @@ export async function add_modmail_message(user_id, data) {
 
 export async function get_modmail_messages(user_id) {
     const entry = await db.modmail_threads.findOne({ user_id });
-    if (!entry) return [];
-    return entry.messages ?? [];
+    return entry?.messages ?? [];
 }
 
 export async function get_modmail_channel(user, opener) {

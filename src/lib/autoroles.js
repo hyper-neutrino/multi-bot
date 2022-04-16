@@ -12,8 +12,7 @@ export async function set_autoroles(user_id, roles) {
 
 export async function get_autoroles(user_id) {
     const entry = await db.autoroles.findOne({ user_id });
-    if (!entry) return [];
-    return entry.roles || [];
+    return entry?.roles || [];
 }
 
 export async function add_autorole(user_id, role_id) {

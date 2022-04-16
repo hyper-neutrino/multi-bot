@@ -4,9 +4,9 @@
             "id": "805458032908959804",
             "owners": ["251082987360223233"],
             "modules": [
-                "automod", "autoroles", "co-op", "count", "custom-roles", "fun", "highlights", "logs", "moderation",
-                "modmail", "music", "nukeguard", "polls", "reminders", "report", "starboard", "suggestions",
-                "utility", "welcome", "xp"
+                "afk", "automod", "autoroles", "co-op", "count", "custom-roles", "fun", "highlights", "logs",
+                "moderation", "modmail", "music", "nukeguard", "polls", "reminders", "report", "starboard",
+                "suggestions", "utility", "welcome", "xp"
             ]
         },
         "coy": {
@@ -21,9 +21,9 @@
             "id": "927153548339343360",
             "owners": ["251082987360223233"],
             "modules": [
-                "automod", "autoroles", "co-op", "count", "custom-roles", "fun", "highlights", "logs", "moderation",
-                "modmail", "music", "nukeguard", "polls", "reminders", "report", "starboard", "suggestions",
-                "utility", "welcome", "xp"
+                "afk", "automod", "autoroles", "co-op", "count", "custom-roles", "fun", "highlights", "logs",
+                "moderation", "modmail", "music", "nukeguard", "polls", "reminders", "report", "starboard",
+                "suggestions", "utility", "welcome", "xp"
             ]
         }
     }

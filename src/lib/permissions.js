@@ -28,8 +28,7 @@ export async function clear_permission(key) {
 
 export async function get_permission(key) {
     const entry = await db.permissions.findOne({ key });
-    if (!entry) return [];
-    return entry.snowflakes || [];
+    return entry?.snowflakes ?? [];
 }
 
 export async function has_permission(key, member) {

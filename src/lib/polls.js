@@ -28,8 +28,7 @@ export async function unset_poll_vote(message, user) {
 
 export async function get_poll_type(message) {
     const entry = await db.polls.findOne({ message_id: message.id });
-    if (!entry) return undefined;
-    return entry.type;
+    return entry?.type;
 }
 
 export async function get_poll_votes(message) {

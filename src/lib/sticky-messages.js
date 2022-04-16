@@ -24,8 +24,7 @@ export async function unstick(channel_id) {
 
 export async function get_stick_content(channel) {
     const entry = await db.stickies.findOne({ channel_id: channel.id });
-    if (!entry) return undefined;
-    return entry.content;
+    return entry?.content;
 }
 
 export async function get_stick_message(channel) {
