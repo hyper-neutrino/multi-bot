@@ -1,11 +1,13 @@
 import client from "../client.js";
 
 export function expand(item) {
+    if (!item) return `${item}`;
+
     if (item.tag) {
         return `${item} (${item.tag} \`${item.id}\`)`;
     } else if (item.user) {
         return `${item} (${item.user.tag} \`${item.id}\`)`;
-    } else if (item.messages) {
+    } else if (item.permissionOverwrites) {
         return `${item} (#${item.name} \`${item.id}\`)`;
     } else if (item.members) {
         return `${item} (@${item.name} \`${item.id}\`)`;
