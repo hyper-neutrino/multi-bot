@@ -12,6 +12,8 @@ export const command = [
         async execute(cmd, channel) {
             channel ??= cmd.channel;
 
+            if (channel.type != "GUILD_TEXT") return "Invalid channel type.";
+
             await channel.permissionOverwrites.edit(cmd.guild.roles.everyone, {
                 SEND_MESSAGES: false,
             });
@@ -31,6 +33,8 @@ export const command = [
         options: ["c:channel*:text the channel to unlock"],
         async execute(cmd, channel) {
             channel ??= cmd.channel;
+
+            if (channel.type != "GUILD_TEXT") return "Invalid channel type.";
 
             await channel.permissionOverwrites.edit(cmd.guild.roles.everyone, {
                 SEND_MESSAGES: null,
