@@ -89,6 +89,7 @@ const permission_bindings = {
     ],
     "history-admin": ["MANAGE_GUILD"],
     kick: ["KICK_MEMBERS"],
+    lock: ["MANAGE_MESSAGES"],
     massban: ["MANAGE_GUILD"],
     modmail: [],
     mute: ["MODERATE_MEMBERS"],

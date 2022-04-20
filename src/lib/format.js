@@ -7,7 +7,7 @@ export function expand(item) {
         return `${item} (${item.tag} \`${item.id}\`)`;
     } else if (item.user) {
         return `${item} (${item.user.tag} \`${item.id}\`)`;
-    } else if (item.permissionOverwrites) {
+    } else if (item.permissionOverwrites || item.send) {
         return `${item} (#${item.name} \`${item.id}\`)`;
     } else if (item.members) {
         return `${item} (@${item.name} \`${item.id}\`)`;
