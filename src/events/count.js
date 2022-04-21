@@ -22,6 +22,7 @@ export const event = [
             if (
                 counter.count.toString() != message.content ||
                 !message.author ||
+                message.attachments.size != 0 ||
                 counter.user_id == message.author.id
             ) {
                 try {
