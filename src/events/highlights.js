@@ -38,7 +38,8 @@ export const event = new Event({
 
             if (
                 message.channel.type == "GUILD_PRIVATE_THREAD" &&
-                !message.channel.members.cache.has(member.id)
+                !message.channel.members.cache.has(member.id) &&
+                !member.permissions.has("MANAGE_THREADS")
             ) {
                 continue;
             }
