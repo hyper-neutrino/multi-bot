@@ -36,6 +36,13 @@ export const event = new Event({
                 continue;
             }
 
+            if (
+                message.channel.type == "GUILD_PRIVATE_THREAD" &&
+                !message.channel.members.cache.has(member.id)
+            ) {
+                continue;
+            }
+
             for (const { term } of await get_highlights(user_id)) {
                 if (normalized.indexOf(" " + term + " ") != -1) {
                     members.push(member);
