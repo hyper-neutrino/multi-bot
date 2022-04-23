@@ -82,44 +82,34 @@ async function scan(message) {
     };
 
     const watchlist = await get_setting_channel("logs.watchlist");
-    const modchat = await get_setting_channel("logs.mod-chat");
-
-    let channel;
 
     switch (result) {
         case "defer":
             embed.description += "I am deferring this report to you.";
-            channel = modchat;
             break;
         case "delete":
             embed.description += "I silently deleted this message.";
-            channel = watchlist;
             break;
         case "verbal":
             embed.description += "I sent a verbal warning to this user.";
-            channel = watchlist;
             break;
         case "warn":
             embed.description += "I sent a formal warning to this user.";
-            channel = watchlist;
             break;
         case "mute":
             embed.description +=
                 "I have muted this user; please evaluate the situation.";
-            channel = modchat;
             break;
         case "kick":
             embed.description += "I have kicked this user.";
-            channel = watchlist;
             break;
         case "ban":
             embed.description +=
                 "I have banned this user; please evaluate the situation.";
-            channel = modchat;
             break;
     }
 
-    const alert = channel && (await channel.send({ embeds: [embed] }));
+    const alert = watchlist && (await watchlist.send({ embeds: [embed] }));
 
     await log({
         embeds: [

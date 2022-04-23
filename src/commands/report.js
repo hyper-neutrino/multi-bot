@@ -9,8 +9,8 @@ export const command = [
     new MessageCommand({
         name: "Flag Message",
         async execute(cmd, message) {
-            const modchat = await get_setting_channel("logs.mod-chat");
-            if (!modchat) {
+            const watchlist = await get_setting_channel("logs.watchlist");
+            if (!watchlist) {
                 return "The mod channel is not configured; please DM modmail instead.";
             }
 
@@ -37,7 +37,7 @@ export const command = [
 
             const reason = modal.data.components[0].components[0].value;
 
-            await modchat.send({
+            await watchlist.send({
                 embeds: [
                     {
                         title: "Flagged Message",
@@ -88,9 +88,9 @@ export const command = [
     new UserCommand({
         name: "Report User",
         async execute(cmd, user) {
-            const modchat = await get_setting_channel("logs.mod-chat");
-            if (!modchat) {
-                return "The mod channel is not configured; please DM modmail instead.";
+            const watchlist = await get_setting_channel("logs.watchlist");
+            if (!watchlist) {
+                return "The watchlist is not configured; please DM modmail instead.";
             }
 
             const modal = await post_modal(cmd, {
@@ -116,7 +116,7 @@ export const command = [
 
             const reason = modal.data.components[0].components[0].value;
 
-            await modchat.send({
+            await watchlist.send({
                 embeds: [
                     {
                         title: "Reported User",
