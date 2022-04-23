@@ -86,26 +86,33 @@ async function scan(message) {
     switch (result) {
         case "defer":
             embed.description += "I am deferring this report to you.";
+            embed.color = "RED";
             break;
         case "delete":
             embed.description += "I silently deleted this message.";
+            embed.color = "AQUA";
             break;
         case "verbal":
             embed.description += "I sent a verbal warning to this user.";
+            embed.color = "GOLD";
             break;
         case "warn":
             embed.description += "I sent a formal warning to this user.";
+            embed.color = "GOLD";
             break;
         case "mute":
             embed.description +=
                 "I have muted this user; please evaluate the situation.";
+            embed.color = "RED";
             break;
         case "kick":
             embed.description += "I have kicked this user.";
+            embed.color = "GOLD";
             break;
         case "ban":
             embed.description +=
                 "I have banned this user; please evaluate the situation.";
+            embed.color = "RED";
             break;
     }
 
@@ -116,7 +123,6 @@ async function scan(message) {
             {
                 title: "Automod Action Taken",
                 description: `Action taken: \`${result}\`.`,
-                color: "AQUA",
                 fields,
                 url: alert && alert.url,
             },
