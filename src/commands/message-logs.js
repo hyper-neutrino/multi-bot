@@ -5,6 +5,7 @@ import {
     list_logger_ignore,
     rm_logger_ignore,
 } from "../lib/message-logs.js";
+import { set_setting } from "../lib/settings.js";
 
 export const module = "logs";
 
@@ -53,5 +54,38 @@ export const command = [
             }`;
         },
         permission: "setting",
+    }),
+
+    new Command({
+        name: "message-logs override set",
+        description:
+            "Set the message logging channel for a specific source channel.",
+        options: [
+            "c:source the source channel",
+            "c:log:text,news,newsthread,privatethread,publicthread the log channel",
+        ],
+        async execute(_, source, log) {
+            await set_setting(`log-override.${source.id}`, log.id);
+
+            return [
+                `Message logs for ${source} will now go to ${log}.`,
+                `= logger-override: ${expand(source)} → ${expand(log)}`,
+            ];
+        },
+    }),
+
+    new Command({
+        name: "message-logs override clear",
+        description:
+            "Clear the message log channel override and return to the normal log channel.",
+        options: ["c:source the source channel to clear"],
+        async execute(_, source) {
+            await set_setting(`log-override.${source.id}`, undefined);
+
+            return [
+                `Message logs for ${source} will go to the default now.`,
+                `- logger-override: ${expand(source)}`,
+            ];
+        },
     }),
 ];

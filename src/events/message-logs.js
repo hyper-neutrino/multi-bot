@@ -17,7 +17,7 @@ export const event = [
             if (!(await is_loggable(after))) return;
             if (before.content == after.content) return;
 
-            const hook = await get_hook();
+            const hook = await get_hook(after.channel);
             if (!hook) return;
 
             await hook.send({
@@ -140,7 +140,7 @@ export const event = [
 async function log_delete(message, hook) {
     if (!(await is_loggable(message, false, true))) return;
 
-    if (!hook) hook = await get_hook();
+    if (!hook) hook = await get_hook(message.channel);
     if (!hook) return;
 
     const files = await copy_attachments(message, 1);
@@ -182,7 +182,7 @@ async function log_delete(message, hook) {
 }
 
 export async function log_delete_bulk(messages) {
-    const hook = await get_hook();
+    const hook = await get_hook(messages[0].channel);
     for (const message of messages) await log_delete(message, hook);
 
     if (messages.length <= 1) return;
@@ -256,8 +256,17 @@ export async function log_delete_bulk(messages) {
 
 export const purge_log_skip = new Set();
 
-async function get_hook() {
+async function get_hook(channel) {
     if (!client.all_commands.has("message-logs")) return undefined;
+
+    do {
+        try {
+            const override = await get_setting_channel(
+                `log-override.${channel.id}`
+            );
+            if (override) return override;
+        } catch {}
+    } while ((channel = channel.parent));
 
     const logs = await get_setting_channel("logs.message");
     if (!logs) return undefined;
