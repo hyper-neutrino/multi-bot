@@ -1,13 +1,17 @@
 export async function pagify(interaction, messages, ephemeral, edit, initial) {
+    const reply = (edit ? interaction.editReply : interaction.reply).bind(
+        interaction
+    );
+
     if (messages.length == 0) {
-        return await interaction.reply({
+        return await reply({
             content: "Attempted to return pages, but there was nothing found.",
             ephemeral,
         });
     }
 
     if (messages.length == 1) {
-        return await interaction.reply({ ...messages[0], ephemeral });
+        return await reply({ ...messages[0], ephemeral });
     }
 
     let page = initial ?? 0;
@@ -20,10 +24,7 @@ export async function pagify(interaction, messages, ephemeral, edit, initial) {
         }
     });
 
-    const message = await (edit
-        ? interaction.editReply
-        : interaction.reply
-    ).bind(interaction)({
+    const message = await reply({
         ...messages[Math.min(initial, messages.length - 1)],
         components: [
             {
