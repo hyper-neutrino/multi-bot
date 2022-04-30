@@ -81,9 +81,6 @@ export const event = new Event({
             for (const [count, _] of choices) sum += count;
 
             value = choices
-                .map(([a, b]) => [-a, b])
-                .sort()
-                .map(([a, b]) => [-a, b])
                 .map(
                     ([count, option]) =>
                         `${option} - ${count} / ${sum} (${(
