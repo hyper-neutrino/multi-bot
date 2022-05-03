@@ -8,7 +8,7 @@ await db.init("history");
 export default async function (cmd, mod, filter, ephemeral) {
     const entries = await db.history
         .find({
-            mod_id: mod.id,
+            mod: mod.id,
             ...(filter ? { type: filter } : {}),
         })
         .toArray();
