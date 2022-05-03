@@ -21,7 +21,7 @@ export default async function (cmd, mod, filter, ephemeral) {
                     description: `${mod}${
                         filter
                             ? ` has issued no ${filter}s.`
-                            : "has not issued any punishments."
+                            : " has not issued any punishments."
                     }`,
                     color: await get_setting("embed-color"),
                 },
