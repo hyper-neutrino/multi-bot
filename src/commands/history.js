@@ -1,25 +1,33 @@
 import { Command, UserCommand } from "paimon.js";
 import db from "../db.js";
+import audit_history from "../moderation/audit_history.js";
 import show_history from "../moderation/show_history.js";
 
 export const module = "moderation";
+
+const filter = [
+    "s:filter* which type of punishment to view (default: all)",
+    "warn",
+    "mute",
+    "kick",
+    "ban",
+];
 
 export const command = [
     new Command({
         name: "history get",
         description: "Get a user's history.",
-        options: [
-            "u:user the user to view",
-            [
-                "s:filter* which type of punishment to view (default: all)",
-                "warn",
-                "mute",
-                "kick",
-                "ban",
-            ],
-        ],
+        options: ["u:user the user to view", filter],
         execute: show_history,
         permission: "history",
+    }),
+
+    new Command({
+        name: "history audit",
+        description: "Get a mod's outgoing punishment history.",
+        options: ["u:user the user to view", filter],
+        execute: audit_history,
+        permission: "history-admin",
     }),
 
     new UserCommand({
