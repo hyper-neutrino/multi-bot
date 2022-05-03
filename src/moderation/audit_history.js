@@ -6,6 +6,8 @@ import { get_setting } from "../lib/settings.js";
 await db.init("history");
 
 export default async function (cmd, mod, filter, ephemeral) {
+    await cmd.deferReply({ ephemeral });
+
     const entries = await db.history
         .find({
             mod: mod.id,
@@ -44,8 +46,10 @@ export default async function (cmd, mod, filter, ephemeral) {
                                 entry.type.charAt(0).toUpperCase() +
                                 entry.type.substring(1)
                             } #${entry.id}`,
-                            value: `Against <@${entry.user}> (${await tag_user(
-                                entry.user
+                            value: `Against <@${
+                                entry.user_id
+                            }> (${await tag_user(
+                                entry.user_id
                             )}) on ${timestamp(entry.time)}${
                                 entry.type == "mute" || entry.type == "ban"
                                     ? ` ${unparse_duration(
@@ -62,7 +66,5 @@ export default async function (cmd, mod, filter, ephemeral) {
         });
     }
 
-    console.log(entries);
-
-    await pagify(cmd, messages, ephemeral);
+    await pagify(cmd, messages, undefined, true);
 }
