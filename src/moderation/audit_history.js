@@ -62,5 +62,7 @@ export default async function (cmd, mod, filter, ephemeral) {
         });
     }
 
+    console.log(entries);
+
     await pagify(cmd, messages, ephemeral);
 }
