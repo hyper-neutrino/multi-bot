@@ -93,6 +93,7 @@ const permission_bindings = {
     massban: ["MANAGE_GUILD"],
     modmail: [],
     mute: ["MODERATE_MEMBERS"],
+    notes: ["MODERATE_MEMBERS", "KICK_MEMBERS", "BAN_MEMBERS"],
     nukeguard: [],
     permission: [],
     poll: [],
