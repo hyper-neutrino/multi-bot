@@ -49,12 +49,17 @@ async function execute(cmd, user) {
         title: "Edit Notes",
         components: [
             {
-                type: 4,
-                style: 2,
-                custom_id: "notes.edit",
-                label: "Notes",
-                value: await get_notes(user.id),
-                min_length: 0,
+                type: 1,
+                components: [
+                    {
+                        type: 4,
+                        style: 2,
+                        custom_id: "notes.edit",
+                        label: "Notes",
+                        value: await get_notes(user.id),
+                        min_length: 0,
+                    },
+                ],
             },
         ],
     });
