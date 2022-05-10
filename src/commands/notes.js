@@ -57,7 +57,7 @@ async function execute(cmd, user) {
                         custom_id: "notes.edit",
                         label: "Notes",
                         value: await get_notes(user.id),
-                        min_length: 0,
+                        required: false,
                     },
                 ],
             },
