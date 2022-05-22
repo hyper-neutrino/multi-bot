@@ -6,8 +6,7 @@ import {
     parse_duration,
     unparse_duration,
 } from "../lib/format.js";
-import { get_setting_role } from "../lib/settings.js";
-import mute from "../moderation/mute.js";
+import timeout from "../moderation/timeout.js";
 import { link_origin, mod_fail, reason_fields } from "../moderation/utils.js";
 
 export const module = "moderation";
@@ -47,7 +46,13 @@ export const command = new Command({
 
         if (!response) return;
 
-        const [status, id] = await mute(cmd.member, user, reason, dm, duration);
+        const [status, id] = await timeout(
+            cmd.member,
+            user,
+            reason,
+            dm,
+            duration
+        );
 
         const message = await response.update({
             embeds: [
@@ -65,7 +70,7 @@ export const command = new Command({
         });
 
         await cmd.log(
-            `Muted ${expand(user)}; dm: ${b2e(
+            `Timed out ${expand(user)}; dm: ${b2e(
                 dm
             )}; duration: ${unparse_duration(duration)}; reason: ${reason}`
         );
