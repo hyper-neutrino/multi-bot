@@ -12,6 +12,14 @@ import StickerCache from "./lib/sticker_cache.js";
 const client = new Client({
     intents: 131071,
     partials: ["CHANNEL", "MESSAGE", "REACTION"],
+    presence: {
+        activities: [
+            {
+                type: "LISTENING",
+                name: "your DMs",
+            },
+        ],
+    },
     async before(interaction, extras) {
         if (interaction.guild.id != this.home.id) return true;
         if (!(await has_permission(extras.permission, interaction.member))) {
