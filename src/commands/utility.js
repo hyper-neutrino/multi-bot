@@ -9,7 +9,7 @@ import {
 import { copy_attachments } from "../lib/message_utils.js";
 import { has_permission } from "../lib/permissions.js";
 import { get_setting, set_setting } from "../lib/settings.js";
-import { parse_message_link } from "../lib/utils.js";
+import { member_info, parse_message_link, user_info } from "../lib/utils.js";
 
 export const module = "utility";
 
@@ -164,134 +164,12 @@ export const command = [
                 const member = await cmd.guild.members.fetch(user.id);
 
                 await cmd.editReply({
-                    embeds: [
-                        {
-                            title: `Member info for ${user.tag}`,
-                            description: user.bot
-                                ? "**This user is a bot.**"
-                                : "",
-                            color: member.displayColor,
-                            thumbnail: {
-                                url: member.displayAvatarURL({ dynamic: true }),
-                            },
-                            fields: [
-                                {
-                                    name: "ID",
-                                    value: `\`${user.id}\``,
-                                },
-                                {
-                                    name: "Creation Date",
-                                    value: timestamp(user.createdAt),
-                                },
-                                {
-                                    name: "Join Date",
-                                    value: timestamp(member.joinedAt),
-                                },
-                                {
-                                    name: "Display Color",
-                                    value: `\`${member.displayHexColor}\``,
-                                },
-                                member.premiumSinceTimestamp
-                                    ? {
-                                          name: "Boosting Since",
-                                          value: timestamp(
-                                              new Date(
-                                                  member.premiumSinceTimestamp
-                                              )
-                                          ),
-                                      }
-                                    : [],
-                                ((custom) =>
-                                    custom
-                                        ? {
-                                              name: "Custom Role",
-                                              value: custom.toString(),
-                                          }
-                                        : [])(
-                                    await get_custom_role(member, false)
-                                ),
-                                {
-                                    name: "Roles",
-                                    value:
-                                        member.roles.cache
-                                            .toJSON()
-                                            .sort((a, b) =>
-                                                b.comparePositionTo(a)
-                                            )
-                                            .slice(0, -1)
-                                            .map((x) => x.toString())
-                                            .join(", ") || "(none)",
-                                },
-                                {
-                                    name: "Permissions",
-                                    value:
-                                        member.permissions
-                                            .toArray()
-                                            .map((x) => `\`${x}\``)
-                                            .join(", ") || "(none)",
-                                },
-                                user.flags && user.flags.toArray().length > 0
-                                    ? {
-                                          name: "User Flags",
-                                          value: user.flags
-                                              .toArray()
-                                              .join(", "),
-                                      }
-                                    : [],
-                            ].flat(),
-                        },
-                    ],
+                    embeds: [await member_info(cmd, user, member)],
                 });
             } catch {
                 user = await user.fetch();
 
-                await cmd.editReply({
-                    embeds: [
-                        {
-                            title: `User info for ${user.tag}`,
-                            description: user.bot
-                                ? "**This user is a bot.**"
-                                : "",
-                            color: user.accentColor,
-                            thumbnail: {
-                                url: user.displayAvatarURL({ dynamic: true }),
-                            },
-                            fields: [
-                                {
-                                    name: "ID",
-                                    value: `\`${user.id}\``,
-                                },
-                                {
-                                    name: "Created At",
-                                    value: timestamp(user.createdAt),
-                                },
-                                (await has_permission("history", cmd.member))
-                                    ? {
-                                          name: "Ban Status",
-                                          value: await (async () => {
-                                              try {
-                                                  await cmd.guild.bans.fetch(
-                                                      user.id
-                                                  );
-                                                  return "This user is banned from this server.";
-                                              } catch {
-                                                  return "This user is not banned from this server.";
-                                              }
-                                          })(),
-                                      }
-                                    : [],
-                                user.flags && user.flags.toArray().length > 0
-                                    ? {
-                                          name: "User Flags",
-                                          value: user.flags
-                                              .toArray()
-                                              .join(", "),
-                                      }
-                                    : [],
-                            ].flat(),
-                        },
-                    ],
-                });
+                await cmd.editReply({ embeds: [await user_info(cmd, user)] });
             }
         },
     }),
