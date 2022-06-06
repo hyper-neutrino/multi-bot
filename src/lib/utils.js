@@ -1,6 +1,7 @@
 import client from "../client.js";
 import { get_custom_role } from "./custom-roles.js";
 import { timestamp } from "./format.js";
+import { has_permission } from "./permissions.js";
 import { get_setting } from "./settings.js";
 
 export async function fetch_snowflake(guild, snowflake) {
