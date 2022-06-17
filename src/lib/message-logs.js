@@ -31,6 +31,7 @@ export async function is_logger_ignoring(channel) {
 }
 
 export async function is_loggable(message, skip_channel, ignore_skip) {
+    console.log(message);
     if (!ignore_skip && purge_log_skip.has(message.id)) return false;
     if (message.content === null) return false;
     if (!message.guild) return false;
