@@ -50,7 +50,9 @@ export const event = [
                     },
                 ],
                 username: after.author.username,
-                avatarURL: after.member.displayAvatarURL({ dynamic: true }),
+                avatarURL: (after.member ?? after.author)?.displayAvatarURL({
+                    dynamic: true,
+                }),
             });
         },
     }),
@@ -87,7 +89,7 @@ export const event = [
         async run(before, after) {
             if (after.guild.id != client.home.id) return;
 
-            const user = after.member.user;
+            const user = after.author;
             if (user.bot) return;
 
             const c1 = before.channel;
@@ -177,7 +179,9 @@ async function log_delete(message, hook) {
         ],
         files,
         username: message.author.username,
-        avatarURL: message.member.displayAvatarURL({ dynamic: true }),
+        avatarURL: (message.member ?? message.author)?.displayAvatarURL({
+            dynamic: true,
+        }),
     });
 }
 
