@@ -140,7 +140,9 @@ export const event = [
 ];
 
 async function log_delete(message, hook) {
+    console.log("A");
     if (!(await is_loggable(message, false, true))) return;
+    console.log("B");
 
     if (!hook) hook = await get_hook(message.channel);
     console.log(hook);
@@ -184,6 +186,8 @@ async function log_delete(message, hook) {
             dynamic: true,
         }),
     });
+
+    console.log("C");
 }
 
 export async function log_delete_bulk(messages) {
