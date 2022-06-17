@@ -182,6 +182,43 @@ async function log_delete(message, hook) {
 
     const files = await copy_attachments(message, 1);
 
+    console.log({
+        embeds: [
+            {
+                title: "Message Deleted",
+                description: message.content,
+                color: "RED",
+                url: message.url,
+                fields: (message.reference
+                    ? [
+                          {
+                              name: "Reference",
+                              value: `https://discord.com/channels/${message.reference.guildId}/${message.reference.channelId}/${message.reference.messageId}`,
+                          },
+                      ]
+                    : []
+                ).concat([
+                    {
+                        name: "Author",
+                        value: expand(message.author),
+                        inline: true,
+                    },
+                    {
+                        name: "Channel",
+                        value: expand(message.channel),
+                        inline: true,
+                    },
+                ]),
+                timestamp: message.createdTimestamp,
+            },
+        ],
+        files,
+        username: message.author.username,
+        avatarURL: (message.member ?? message.author)?.displayAvatarURL({
+            dynamic: true,
+        }),
+    });
+
     await hook.send({
         embeds: [
             {
