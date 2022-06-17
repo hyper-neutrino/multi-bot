@@ -20,41 +20,6 @@ export const event = [
             const hook = await get_hook(after.channel);
             if (!hook) return;
 
-            console.log({
-                embeds: [
-                    {
-                        title: "Message Edited",
-                        color: "GOLD",
-                        url: after.url,
-                        fields: [
-                            {
-                                name: "Before",
-                                value: before.content.substring(0, 1024),
-                            },
-                            {
-                                name: "After",
-                                value: after.content.substring(0, 1024),
-                            },
-                            {
-                                name: "Author",
-                                value: expand(after.author),
-                                inline: true,
-                            },
-                            {
-                                name: "Channel",
-                                value: expand(after.channel),
-                                inline: true,
-                            },
-                        ],
-                        timestamp: after.createdTimestamp,
-                    },
-                ],
-                username: after.author.username,
-                avatarURL: (after.member ?? after.author)?.displayAvatarURL({
-                    dynamic: true,
-                }),
-            });
-
             await hook.send({
                 embeds: [
                     {
@@ -181,43 +146,6 @@ async function log_delete(message, hook) {
     if (!hook) return;
 
     const files = await copy_attachments(message, 1);
-
-    console.log({
-        embeds: [
-            {
-                title: "Message Deleted",
-                description: message.content,
-                color: "RED",
-                url: message.url,
-                fields: (message.reference
-                    ? [
-                          {
-                              name: "Reference",
-                              value: `https://discord.com/channels/${message.reference.guildId}/${message.reference.channelId}/${message.reference.messageId}`,
-                          },
-                      ]
-                    : []
-                ).concat([
-                    {
-                        name: "Author",
-                        value: expand(message.author),
-                        inline: true,
-                    },
-                    {
-                        name: "Channel",
-                        value: expand(message.channel),
-                        inline: true,
-                    },
-                ]),
-                timestamp: message.createdTimestamp,
-            },
-        ],
-        files,
-        username: message.author.username,
-        avatarURL: (message.member ?? message.author)?.displayAvatarURL({
-            dynamic: true,
-        }),
-    });
 
     await hook.send({
         embeds: [

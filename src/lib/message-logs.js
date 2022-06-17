@@ -31,15 +31,17 @@ export async function is_logger_ignoring(channel) {
 }
 
 export async function is_loggable(message, skip_channel, ignore_skip) {
-    if (!ignore_skip && purge_log_skip.has(message.id)) return false;
-    if (message.content === null) return false;
-    if (!message.guild) return false;
-    if (message.system) return false;
-    if (message.guild.id != client.home.id) return false;
-    if (message.webhookId) return false;
-    if (message.author?.bot) return false;
-    if (skip_channel) return true;
-    if (await is_logger_ignoring(message.channel)) return false;
+    if (!ignore_skip && purge_log_skip.has(message.id))
+        return console.log("a"), false;
+    if (message.content === null) return console.log("b"), false;
+    if (!message.guild) return console.log("c"), false;
+    if (message.system) return console.log("d"), false;
+    if (message.guild.id != client.home.id) return console.log("e"), false;
+    if (message.webhookId) return console.log("f"), false;
+    if (message.author?.bot) return console.log("g"), false;
+    if (skip_channel) return console.log("h"), true;
+    if (await is_logger_ignoring(message.channel))
+        return console.log("i"), false;
 
-    return true;
+    return console.log("j"), false;
 }
