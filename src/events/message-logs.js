@@ -20,6 +20,41 @@ export const event = [
             const hook = await get_hook(after.channel);
             if (!hook) return;
 
+            console.log({
+                embeds: [
+                    {
+                        title: "Message Edited",
+                        color: "GOLD",
+                        url: after.url,
+                        fields: [
+                            {
+                                name: "Before",
+                                value: before.content.substring(0, 1024),
+                            },
+                            {
+                                name: "After",
+                                value: after.content.substring(0, 1024),
+                            },
+                            {
+                                name: "Author",
+                                value: expand(after.author),
+                                inline: true,
+                            },
+                            {
+                                name: "Channel",
+                                value: expand(after.channel),
+                                inline: true,
+                            },
+                        ],
+                        timestamp: after.createdTimestamp,
+                    },
+                ],
+                username: after.author.username,
+                avatarURL: (after.member ?? after.author)?.displayAvatarURL({
+                    dynamic: true,
+                }),
+            });
+
             await hook.send({
                 embeds: [
                     {

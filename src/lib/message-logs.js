@@ -37,7 +37,7 @@ export async function is_loggable(message, skip_channel, ignore_skip) {
     if (message.system) return false;
     if (message.guild.id != client.home.id) return false;
     if (message.webhookId) return false;
-    if (message.author.bot) return false;
+    if (message.author?.bot) return false;
     if (skip_channel) return true;
     if (await is_logger_ignoring(message.channel)) return false;
 
