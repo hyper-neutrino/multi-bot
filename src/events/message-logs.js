@@ -143,6 +143,7 @@ async function log_delete(message, hook) {
     if (!(await is_loggable(message, false, true))) return;
 
     if (!hook) hook = await get_hook(message.channel);
+    console.log(hook);
     if (!hook) return;
 
     const files = await copy_attachments(message, 1);
