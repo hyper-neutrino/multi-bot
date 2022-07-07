@@ -40,4 +40,4 @@ setInterval(async () => {
             await channel.edit({ name });
         } catch {}
     }
-}, 10000);
+}, 600000);
