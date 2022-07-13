@@ -25,7 +25,7 @@ export async function pagify(interaction, messages, ephemeral, edit, initial) {
     });
 
     const message = await reply({
-        ...messages[Math.min(initial, messages.length - 1)],
+        ...messages[Math.min(page, messages.length - 1)],
         components: [
             {
                 type: "ACTION_ROW",
