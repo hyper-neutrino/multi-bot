@@ -70,6 +70,7 @@ export const command = [
                         color: await get_setting("embed-color"),
                     },
                 ],
+                allowedMentions: { parse: ["roles"] },
             });
 
             set_cooldown(cmd.user);
