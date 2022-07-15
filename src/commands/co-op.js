@@ -61,7 +61,7 @@ export const command = [
 
             const helper = await get_setting_role(`helper.${region}`);
 
-            await cmd.reply({
+            await cmd.channel.send({
                 content: helper && helper.toString(),
                 embeds: [
                     {
@@ -72,6 +72,8 @@ export const command = [
                 ],
                 allowedMentions: { parse: ["roles"] },
             });
+
+            await cmd.reply({ content: "Posted!", ephemeral: true });
 
             set_cooldown(cmd.user);
         },
