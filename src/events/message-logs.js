@@ -89,7 +89,7 @@ export const event = [
         async run(before, after) {
             if (after.guild.id != client.home.id) return;
 
-            const user = after.author;
+            const user = after.member.user;
             if (user.bot) return;
 
             const c1 = before.channel;
