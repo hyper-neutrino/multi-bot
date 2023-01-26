@@ -9,7 +9,7 @@
                 "suggestions", "utility", "welcome", "xp"
             ]
         },
-        "hyam": {
+        "kdkm": {
             "id": "977978978256158771",
             "owners": ["251082987360223233"],
             "modules": [
@@ -18,6 +18,23 @@
 		"suggestions", "utility", "welcome", "xp"
             ]
         },
+        "dhm": {
+            "id": "992162190163451984",
+	    "owners": ["251082987360223233"],
+	    "modules": [
+		"afk", "automod", "autoroles", "co-op", "custom-roles", "fun", "highlights", "logs", "moderation",
+		"modmail", "modnotes", "music", "nukeguard", "polls", "reminders", "report", "starboard",
+		"suggestions", "utility", "welcome", "xp"
+	    ]
+        },
+	"nlm": {
+            "id": "940490596303372348",
+	    "owners": ["251082987360223233"],
+	    "modules": [
+                "automod", "co-op", "fun", "highlights", "logs", "moderation", "modmail", "modnotes", "nukeguard",
+		"polls", "reminders", "starboard", "utility", "welcome"
+	    ]
+	},
         "test": {
             "id": "927153548339343360",
             "owners": ["251082987360223233"],
